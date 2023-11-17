@@ -1,0 +1,123 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+ul,
+li {
+    list-style: none;
+}
+
+.slidebox {
+    max-width: 700px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.slidebox .slidelist {
+    position: relative;
+    white-space: nowrap;
+    font-size: 0;
+    overflow: hidden;
+    border-radius: 10px;
+}
+
+.slidebox .slidelist .slideitem {
+    position: relative;
+    display: inline-block;
+    vertical-align: middle;
+    background-color: rgb(46, 40, 40);
+    width: 100%;
+    transition: transform 1s; 
+    border-radius: 10px;
+}
+
+.slidebox .slidelist .slideitem>a {
+    display: block;
+    width: auto;
+    position: relative;
+    border-radius: 10px;
+}
+
+.slidebox .slidelist .slideitem>a img {
+    max-width: 80%;
+    border-radius: 10px;
+}
+
+.slidebox .slide-control [class*="control"] label {
+    position: absolute;
+    z-index: 10;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.slidebox .slide-control [class*="control"] label.prev {
+    z-index: 1;
+    left: -180px;
+    background: #333 url('../../img/left-arrow.png') center center / 50% no-repeat;
+}
+
+.slidebox .slide-control [class*="control"] label.next {
+    z-index: 1;
+    right: -50px;
+    background: #333 url('../../img/right-arrow.png') center center / 50% no-repeat;
+}
+
+[name="slide"] {
+    display: none;
+}
+
+#slide01:checked~.slidelist .slideitem {
+    transform: translateX(0); 
+    border-radius: 10px;
+}
+
+#slide02:checked~.slidelist .slideitem {
+    transform: translateX(-100%); 
+    border-radius: 10px;
+}
+
+#slide03:checked~.slidelist .slideitem {
+    transform: translateX(-200%); 
+    border-radius: 10px;
+}
+
+#slide04:checked~.slidelist .slideitem {
+    transform: translateX(-300%); 
+    border-radius: 10px;
+}
+
+.slide-control [class*="control"] {
+    display: none;
+}
+
+#slide01:checked~.slide-control .control01 {
+    display: block;
+    border-radius: 10px;
+}
+
+#slide02:checked~.slide-control .control02 {
+    display: block;
+}
+
+#slide03:checked~.slide-control .control03 {
+    display: block;
+}
+
+#slide04:checked~.slide-control .control04 {
+    display: block;
+}
+
+#myGif {
+    position: absolute;
+    left: 12%;
+    top: 8%;
+    width: 1600px;
+    height: 850px;
+    z-index: 10;
+    display: none;
+}

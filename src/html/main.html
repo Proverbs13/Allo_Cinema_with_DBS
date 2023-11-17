@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+    <link rel="stylesheet" type="text/css" href="../css/main.css">
+<script src="../js/jquery-3.7.0.min.js"></script>
+<script src="../js/main_video.js"></script>
+<script src="https://d3js.org/d3.v7.min.js" charset="utf-8"></script>
+<script type="text/javascript">   
+
+$(document).ready( function() { //jquery 사용
+
+$("#headers").load("header.html"); //header.html을 객체화
+$("#footers").load("footer.html"); //footer.html을 객체화
+$("#side").load("side.html"); //side.html을 객체화
+$("#contents").load("contents-now.html"); //contents-now.html을 객체화
+$("#slide").load("slide.html"); //slide.html을 객체화
+});
+
+$(document).ready(function() {
+      function changePage1() {  //컨텐츠 페이지 교환 함수
+        $("#contents").load("contents-now.html");
+        var newContent = '현재 상영작';
+        $('#category-name').html(newContent);//현재 상영작 페이지로 교체
+      }
+      
+      
+      $('#now').click(function() {//now 텍스트 클릭시
+        changePage1();
+      });
+
+      
+    });
+
+$(document).ready(function() {
+      function changePage2() { //컨텐츠 페이지 교환 함수2
+        $("#contents").load("contents-future.html");
+        var newContent = '개봉 예정작';
+        $('#category-name').html(newContent);//개봉 예정작 페이지로 교체
+      }
+      
+      
+      $('#future').click(function() {//future 텍스트 클릭시
+        changePage2();
+      });
+
+      
+    });    
+
+$(document).ready(function() {
+  // 스크롤 관련 -----------------------------------------------------------------
+  function scrollToTop() {
+          $('html, body').animate({scrollTop: 0}, 'smooth');
+      }
+
+      $(window).scroll(function () {
+          const scrollPosition = $(this).scrollTop();
+          const scrollToTopButton = $("#scroll-to-top-button");
+
+          if (scrollPosition > 200) {
+              scrollToTopButton.show();
+          } else {
+              scrollToTopButton.hide();
+          }
+      });
+
+      $("#scroll-to-top-button").click(function () {
+          scrollToTop();
+      });
+  });
+</script>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allô Cinéma</title>
+</head>
+<div id="headers"></div>
+<body>
+    <div id="slide"></div>
+
+    
+    <main>
+        <div id="side"></div>
+        <div>
+          <div class="abcdefg">
+        <span id="category-name">현재 상영작</span>
+        <span class="category">
+        <span id="now">현재 상영작</span>
+        <span id="future">개봉 예정작</span>
+        </span>
+        </div>
+        <div id="contents"></div>
+        </div>
+    </main>
+    <div id="footers"></div>
+    <button id="scroll-to-top-button" title="맨 위로 이동" onclick="scrollToTop()">^</button>
+</body>
+</html>

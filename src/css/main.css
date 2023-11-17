@@ -1,0 +1,121 @@
+@font-face {
+    font-family: 'baemin_font';
+    font-style: normal;
+    src: url('../../font/BMJUA_ttf.ttf') format('truetype');
+}
+
+* {
+    font-family: 'baemin_font';
+}
+
+#scroll-to-top-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    color: #fff;
+    background-color: blueviolet;
+    border: none;
+    border-radius: 50%;
+    box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 5;
+}
+
+.abcdefg{
+    margin-left: 30px;
+    height: 50px;
+    width: 1400px;
+    background-color: rgb(32, 29, 29);
+    border-radius: 10px;
+}
+
+
+
+#category-name {
+    margin-left: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    color: blueviolet;
+}
+
+.trailer {
+    position: absolute;
+    top: 10%;
+    left: 32%;
+    z-index: 10;
+    display: none;
+}
+
+body {
+    background-color: rgb(46, 40, 40);
+}
+
+main {
+    width: 2000px;
+    display: flex;
+    flex-grow: 1;
+    overflow: hidden;
+    background-color: rgb(46, 40, 40);
+}
+
+#side {
+    margin-top: 35px;
+}
+
+#contents {
+    flex-grow: 1;
+    padding: 0 30px 50px;
+    overflow-y: auto;
+}
+
+#slide {
+    margin-left: 20%;
+    width: 1400px;
+    background-color: rgb(46, 40, 40);
+}
+
+
+.scrollBar {
+    width: 200px;
+    height: 200px;
+    overflow-y: scroll;
+}
+
+
+.scrollBar::-webkit-scrollbar {
+    width: 10px;
+    
+}
+
+.scrollBar::-webkit-scrollbar-thumb {
+    height: 30%;
+    
+    background: #000000;
+
+    border-radius: 10px;
+}
+
+.scrollBar::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);
+}
+
+
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+body::-webkit-scrollbar-thumb {
+    height: 30%;
+
+    background: #000000;
+
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);
+}

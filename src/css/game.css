@@ -1,0 +1,73 @@
+@font-face {
+    font-family: 'baemin_font';
+    font-style: normal;
+    src: url('../../font/BMJUA_ttf.ttf') format('truetype');
+}
+
+* {
+    font-family: 'baemin_font';
+}
+
+
+body {
+    background-color: rgb(46, 40, 40);
+    margin: 0;
+}
+
+body::-webkit-scrollbar {
+    width: 8px;
+    
+}
+
+body::-webkit-scrollbar-thumb {
+    height: 30%;
+    
+    background: #000000;
+    
+
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1);
+    
+}
+
+
+
+
+#canvas {
+    position: absolute;
+    top: 150px;
+    bottom: 60px;
+    left: 3.4%;
+    width: 2000px;
+    background-image: url('../../img/back.jpg');
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+}
+
+
+#footers {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #333;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+audio {
+    position: fixed;
+    bottom: 100px;
+    left: 10px;
+    width: 280px;
+
+}

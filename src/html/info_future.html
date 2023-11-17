@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <div id="headers"></div>
+<head>
+    <meta charset="UTF-8">
+    <title>개봉예정작-상세정보페이지</title>
+    <link rel="stylesheet" href="../css/infostyle.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="movie-info">
+            <img id="movie-image" src="image url">
+            <div class="movie-info-content">
+                <h2>기본 정보</h2>
+                <p class="white_text">제목: <span class="white_text" id="movie-title">영화 제목 작성</span></p>
+                <p class="white_text">개봉: <span class="white_text" id="movie-release-date">YYYY-MM-DD</span></p>
+                <p class="white_text">등급: <span class="white_text" id="movie-old">영화 등급</span></p>
+                <p class="white_text">장르: <span class="white_text" id="movie-genre">장르 작성</span></p>
+                <p class="white_text">국가: <span class="white_text" id="movie-state">국가</span></p>
+                <p class="white_text">러닝 타임: <span class="white_text" id="movie-running-time">런닝 타임 작성</span></p>
+                <p class="white_text">배급: <span class="white_text" id="movie-distributer">배급</span></p>
+            </div>
+        </div>
+
+        <div class="movie-info">
+            <div class="movie-info-content">
+                <h2>소개</h2>
+                <p class="white_text" id="movie-intro">소개 내용이 있는 부분. 소개 내용이 있는 부분. 소개 내용이 있는 부분. 소개 내용이 있는 부분. 소개 내용이 있는 부분. 소개 내용이 있는 부분. 소개 내용이 있는 부분.</p>
+            </div>
+        </div>
+
+        <div class="movie-info">
+            <div class="movie-info-content">
+                <h2 class="info_name">감독</h2>
+                <div class="people_card">
+                    <div class="thumb">
+                        <img id="director_img" src="../../img/human_default.png" alt="사진">
+                    </div>
+                    <div class="title_box">
+                        <span class="sub_name" style="max-height: 4rem0;">감독</span>
+                        <strong class="people_name" id="movie-director" style="max-height:  4rem;">감독 이름</strong>
+                    </div>
+               </div>
+            </div>
+        </div>
+
+        <div class="movie-info">
+            <div class="movie-info-content">
+                <h2 class="info_name">출연</h2>
+                <div class="movie-actor">
+                </div>
+            </div>
+        </div>
+
+        <!-- 기대 메시지 -->
+        <div class="review-section">
+            <h2>기대/응원의 메시지</h2>
+            <ul class="review-list">
+                <li class="review-item">
+                    <div class="name">이름1</div>
+                    <div>응원 내용1</div>
+                </li><br>
+                <li class="review-item">
+                    <div class="name">이름2</div>
+                    <div>응원 내용2</div>
+                </li><br>
+            </ul>
+            <div class="comment-input">
+                <div class="comment-input-container">
+                    <br>
+                    <div>이름</div>
+                    <input type="text" class="name-input" placeholder="이름을 입력하세요.">
+                </div>
+                <div>메시지</div>
+                <textarea placeholder="기대/응원의 메시지를 적어주세요!"></textarea>
+                <button class="save-review-button">작성</button>
+            </div>
+        </div>
+        <!-- 리뷰 섹션 끝 -->
+    </div>
+    <button id="scroll-to-top-button" title="맨 위로 이동" onclick="scrollToTop()">^</button>
+</body>
+<div id="footers"></div>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<script>
+    var urlParams = new URLSearchParams(window.location.search);
+    var value = urlParams.get('value');
+
+    $(document).ready(function () {
+
+        // 스크롤 관련 -----------------------------------------------------------------
+        function scrollToTop() {
+            $('html, body').animate({scrollTop: 0}, 'smooth');
+        }
+
+        $(window).scroll(function () {
+            const scrollPosition = $(this).scrollTop();
+            const scrollToTopButton = $("#scroll-to-top-button");
+
+            if (scrollPosition > 200) {
+                scrollToTopButton.show();
+            } else {
+                scrollToTopButton.hide();
+            }
+        });
+
+        $("#scroll-to-top-button").click(function () {
+            scrollToTop();
+        });
+
+
+        // 체크박스 정의
+        const checkboxes = Array.from(document.querySelectorAll('.rating input[type="checkbox"]'));
+        function updateRating() {
+            const selectedCheckbox = checkboxes.find((checkbox) => checkbox.checked);
+            let selectedIndex = selectedCheckbox ? checkboxes.indexOf(selectedCheckbox) : -1;
+
+            if (selectedIndex >= 0) {
+                checkboxes.forEach((checkbox, i) => {
+                    checkbox.checked = i <= selectedIndex;
+                });
+            }
+        }
+
+        // 체크박스 받아오기
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('click', () => {
+                updateRating();
+            });
+        });
+
+        // 응원 저장
+        function saveReviewsToLocal(value, reviews) {
+            const key = `reviews-${value}`;
+            localStorage.setItem(key, JSON.stringify(reviews));
+        }
+
+
+        // 응원 불러오기
+        function getReviewsFromLocal(value) {
+            const key = `reviews-${value}`;
+            const storedReviews = localStorage.getItem(key);
+            return storedReviews ? JSON.parse(storedReviews) : [];
+        }
+
+        //응원 생성
+        function createReviewItem(name, ratingStars, content) {
+            return $("<li>", { class: "review-item" })
+                .append($("<div>", { class: "name", text: name }))
+                .append($("<div>", { html: content }))
+                .append($("<br>"));
+        }
+
+        function displayReviews() {
+            const reviewList = $(".review-list");
+            reviewList.empty();
+            const value = urlParams.get('value');
+            const storedReviews = getReviewsFromLocal(value);
+
+            storedReviews.forEach(function (review) {
+                const newReview = createReviewItem(review.name, review.ratingStars, review.content);
+                reviewList.append(newReview);
+            });
+        }
+
+        // 리뷰 추가
+        function addReview(value, name, ratingIndex, content) {
+            const storedReviews = getReviewsFromLocal(value);
+            const ratingStars = ratingIndex;
+            storedReviews.push({ name, ratingStars, content });
+            saveReviewsToLocal(value, storedReviews);
+            displayReviews();
+        }
+
+        $(".save-review-button").click(function () {
+            const nameInput = $(".name-input");
+            const ratingIndex = checkboxes.filter((el) => el.checked).length;
+            const contentTextarea = $("textarea");
+            const value = urlParams.get('value');
+
+            const name = nameInput.val();
+            const content = contentTextarea.val();
+
+            if (name) {
+                if (ratingIndex >= 0) {
+                    addReview(value,name, ratingIndex, content);
+                    nameInput.val('');
+                    checkboxes.forEach((checkbox) => { checkbox.checked = false; });
+                    contentTextarea.val('');
+                
+                }
+            } else {
+                alert('이름을 입력하세요.');
+            }
+        });
+
+        displayReviews();
+    });
+</script>
+
+
+<script src="../js/jquery-3.7.0.min.js"></script>
+<script type="text/javascript">   
+
+$(document).ready( function() { //jquery 사용
+
+$("#headers").load("header.html"); //header.html을 객체화
+$("#footers").load("footer.html"); //footer.html을 객체화
+$("#side").load("side.html"); //side.html을 객체화
+$("#contents").load("contents-now.html"); //contents-now.html을 객체화
+$("#slide").load("slide.html"); //slide.html을 객체화
+});
+
+$(document).ready(function() {
+      function changePage1() {  //컨텐츠 페이지 교환 함수
+        $("#contents").load("contents-now.html");
+        var newContent = '현재 상영작';
+        $('#category-name').html(newContent);//현재 상영작 페이지로 교체
+      }
+      
+      
+      $('#now').click(function() {//now 텍스트 클릭시
+        changePage1();
+      });
+
+      
+    });
+
+$(document).ready(function() {
+      function changePage2() { //컨텐츠 페이지 교환 함수2
+        $("#contents").load("contents-future.html");
+        var newContent = '개봉 예정작';
+        $('#category-name').html(newContent);//개봉 예정작 페이지로 교체
+      }
+      
+      
+      $('#future').click(function() {//future 텍스트 클릭시
+        changePage2();
+      });
+
+      
+    });    
+
+    
+</script>
+<script src="../js/data_future.js"></script>
+
+</html>
