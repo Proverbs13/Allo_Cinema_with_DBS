@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="../css/contents.css">
-    <script src="../js/main_video.js"></script>
+    <meta charset="UTF-8">
+    <title>내 정보 페이지</title>
+    <link rel="stylesheet" href="../css/my-info.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <hr>
@@ -13,7 +14,7 @@
             include '../php/dbconfig.php';
 
             // 데이터베이스에서 정보 가져오기
-            $sql = "SELECT MV_name, Grade, Audi_num FROM Movie LIMIT 10";
+            $sql = "SELECT USR_ID, pwd, USR_name ,Phone_num, FROM Movie LIMIT 10";
             $result = $conn->query($sql);
 
             if ($result->num_rows > 0) {
