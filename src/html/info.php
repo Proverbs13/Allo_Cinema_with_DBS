@@ -132,29 +132,51 @@
 
 
         <!-- 리뷰 섹션 -->
-        <div class="review-section">
-            <h2>리뷰</h2>
-            <ul class="review-list">
-                <li class="review-item">
-                    <div class="name">이름1</div>
-                    <div class="ratingStars">★★★★☆</div>
-                    <div class="content">리뷰 내용1</div>
-                </li><br>
-                <li class="review-item">
-                    <div class="name">이름2</div>
-                    <div class="ratingStars">★★★☆☆</div>
-                    <div class="content">리뷰 내용2</div>
-                </li><br>
-            </ul>
+        <?php
+        include '../php/dbconfig.php';
+        // 영화 코드
+        $movieCode = $_GET['value'];
+        // 리뷰 정보를 가져오는 쿼리
+        $sql = "SELECT U.USR_name, R.MV_code, R.rating, R.content 
+        FROM Review R
+        INNER JOIN User U ON R.USR_ID = U.USR_ID
+        WHERE R.MV_code = '$value'";
+
+        $result = $conn->query($sql);
+
+        // 결과 출력
+        if ($result->num_rows > 0) {
+            echo '<div class="review-section">';
+            echo '<h2>리뷰</h2>';
+            echo '<ul class="review-list">';
+            while ($row = $result->fetch_assoc()) {
+                $username = $row['USR_name'];
+                $movieCode = $row['MV_code'];
+                $rating = $row['rating'];
+                $content = $row['content'];
+
+                echo '<li class="review-item">';
+                echo '<div class="name">' . $username . '</div>';
+                echo '<div class="ratingStars">';
+                // 별점을 표시하는 JavaScript 함수 호출
+                echo '<script>displayRating(' . $rating . ').appendTo(".ratingStars");</script>';
+                echo '</div>';
+                echo '<div class="content">' . $content . '</div>';
+                echo '</li><br>';
+            }
+            echo '</ul>';
+            echo '</div>';
+        } else {
+            echo '리뷰가 없습니다.';
+        }
+        $conn->close();
+        ?>
+
+                <form method="post" action="user-register.php">
             <div class="comment-input">
-                <div class="comment-input-container">
-                    <br>
-                    <div class="white_text">이름</div>
-                    <input type="text" class="name-input" placeholder="이름을 입력하세요.">
-                </div>
                 <div class="white_text">별점</div>
                 <div class="rating">
-                    <input type="checkbox" class="star" id="star-1" value="1">
+                    <input type="checkbox" class="star" id="star-1" name="rating" value="1">
                     <label for="star-1"></label>
                     <input type="checkbox" class="star" id="star-2" value="2">
                     <label for="star-2"></label>
@@ -164,135 +186,41 @@
                     <label for="star-4"></label>
                     <input type="checkbox" class="star" id="star-5" value="5">
                     <label for="star-5"></label>
-                </div>
-                <textarea placeholder="어떤 소감을 느끼셨나요?"></textarea>
-                <button class="save-review-button">작성</button>
+                    </div>
+                <textarea name="content" placeholder="어떤 소감을 느끼셨나요?"></textarea>
+                <button type="submit" class="save-review-button">작성</button>
             </div>
+        </form>
+
+        
         </div>
-        <!-- 리뷰 섹션 끝 -->
+
+       
     </div>
     <button id="scroll-to-top-button" title="맨 위로 이동" onclick="scrollToTop()">^</button>
 </body>
 <div id="footers"></div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+
 <script>
+    // 별점 표시를 위한 함수
+    function displayRating(ratingStars) {
+        const ratingContainer = $("<div>", { class: "ratingStars" });
 
-
-    // 현재 URL에서 쿼리 파라미터 값을 읽어옴
-    var urlParams = new URLSearchParams(window.location.search);
-    var value = urlParams.get('value');
-
-    $(document).ready(function () {
-
-        // 스크롤 관련 -----------------------------------------------------------------
-        function scrollToTop() {
-            $('html, body').animate({ scrollTop: 0 }, 'smooth');
-        }
-
-        $(window).scroll(function () {
-            const scrollPosition = $(this).scrollTop();
-            const scrollToTopButton = $("#scroll-to-top-button");
-
-            if (scrollPosition > 200) {
-                scrollToTopButton.show();
+        for (let i = 0; i < 5; i++) {
+            const star = $("<span>", { class: "star" });
+            if (i < ratingStars) {
+                star.text("★");
             } else {
-                scrollToTopButton.hide();
+                star.text("☆");
             }
-        });
-
-        $("#scroll-to-top-button").click(function () {
-            scrollToTop();
-        });
-
-
-        // 체크박스 정의
-        const checkboxes = Array.from(document.querySelectorAll('.rating input[type="checkbox"]'));
-        function updateRating() {
-            const selectedCheckbox = checkboxes.find((checkbox) => checkbox.checked);
-            let selectedIndex = selectedCheckbox ? checkboxes.indexOf(selectedCheckbox) : -1;
-
-            if (selectedIndex >= 0) {
-                checkboxes.forEach((checkbox, i) => {
-                    checkbox.checked = i <= selectedIndex;
-                });
-            }
+            ratingContainer.append(star);
         }
 
-        // 체크박스 받아오기
-        checkboxes.forEach((checkbox) => {
-            checkbox.addEventListener('click', () => {
-                updateRating();
-            });
-        });
+        return ratingContainer;
+    }
 
-        // 리뷰 저장
-        function saveReviewsToLocal(value, reviews) {
-            const key = `reviews-${value}`;
-            localStorage.setItem(key, JSON.stringify(reviews));
-        }
-
-        // 리뷰 불러오기
-        function getReviewsFromLocal(value) {
-            const key = `reviews-${value}`;
-            const storedReviews = localStorage.getItem(key);
-            return storedReviews ? JSON.parse(storedReviews) : [];
-        }
-
-        //리뷰생성
-        function createReviewItem(name, ratingStars, content) {
-            return $("<li>", { class: "review-item" })
-                .append($("<div>", { class: "name", text: name }))
-                .append($("<div>", { text: "★".repeat(ratingStars) })) 
-                .append($("<div>", { class: "content", html: content }))
-                .append($("<br>"));
-        }
-
-        function displayReviews() {
-            const reviewList = $(".review-list");
-            reviewList.empty();
-            const value = urlParams.get('value');
-            const storedReviews = getReviewsFromLocal(value);
-
-            storedReviews.forEach(function (review) {
-                const newReview = createReviewItem(review.name, review.ratingStars, review.content);
-                reviewList.append(newReview);
-            });
-        }
-
-        // 리뷰 추가
-        function addReview(value, name, ratingIndex, content) {
-            const storedReviews = getReviewsFromLocal(value);
-            const ratingStars = ratingIndex;
-            storedReviews.push({ name, ratingStars, content });
-            saveReviewsToLocal(value, storedReviews);
-            displayReviews();
-        }
-
-        $(".save-review-button").click(function () {
-            const nameInput = $(".name-input");
-            const ratingIndex = checkboxes.filter((el) => el.checked).length;
-            const contentTextarea = $("textarea");
-            const value = urlParams.get('value');
-
-            const name = nameInput.val();
-            const content = contentTextarea.val();
-
-            if (name) {
-                if (ratingIndex >= 0) {
-                    addReview(value, name, ratingIndex, content);
-                    nameInput.val('');
-                    checkboxes.forEach((checkbox) => { checkbox.checked = false; });
-                    contentTextarea.val('');
-                } else {
-                    alert('별점을 선택하세요.');
-                }
-            } else {
-                alert('이름을 입력하세요.');
-            }
-        });
-
-        displayReviews();
-    });
+    // 기타 JavaScript 코드 생략
 </script>
 
 
