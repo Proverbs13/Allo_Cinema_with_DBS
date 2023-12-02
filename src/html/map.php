@@ -4,7 +4,6 @@
 <head>
   <meta charset="utf-8">
   <title>내 근처 영화관</title>
-  <script type="text/javascript" src="../js/map.js"></script>
   <link rel="stylesheet" type="text/css" href="../css/map.css">
 </head>
 <body>
@@ -13,8 +12,17 @@
 <div id="footers"></div>
 </html>
 
+<?php include '../php/dbconfig.php'; ?>
+
+<script type="text/javascript">
+    // PHP에서 가져온 데이터를 JavaScript 변수로 할당
+    var theaters = <?php echo json_encode($theaters); ?>;
+</script>
+
+<script type="module" src="../js/map.js"></script>
+
 <script src="../js/jquery-3.7.0.min.js"></script>
-<script type="text/javascript">   
+<script type="text/javascript">
 
   $(document).ready( function() { //jquery 사용
   
