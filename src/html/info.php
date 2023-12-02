@@ -9,22 +9,58 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 </head>
 
+
 <body>
     <div class="container">
         <div class="movie-info">
             <img id="movie-image">
             <div class="movie-info-content">
                 <h2>기본 정보</h2>
-                <p class="white_text">제목: <span class="white_text" id="movie-title">영화 제목 작성</span></p>
-                <p class="white_text">개봉: <span class="white_text" id="movie-release-date">YYYY-MM-DD</span></p>
-                <p class="white_text">등급: <span class="white_text" id="movie-old">영화 등급</span></p>
-                <p class="white_text">장르: <span class="white_text" id="movie-genre">장르 작성</span></p>
-                <p class="white_text">국가: <span class="white_text" id="movie-state">국가</span></p>
-                <p class="white_text">러닝 타임: <span class="white_text" id="movie-running-time">런닝 타임 작성</span></p>
-                <p class="white_text">배급: <span class="white_text" id="movie-distributer">배급</span></p>
+                <p class="white_text">제목: <span class="white_text" id="movie-title">
+                        <?php
+                        include '../php/dbconfig.php';
+
+                        // 현재 URL에서 쿼리 파라미터 값을 읽어옴
+                        $value = $_GET['value'];
+
+                        // 데이터베이스에서 정보 가져오기
+                        // 감독 정보와 영화 정보를 함께 가져오는 쿼리
+                        $sql = "SELECT M.MV_name, M.Opening_date, M.Grade, M.Run_Time, M.Audi_num, D.DIR_name ,M.Mv_Des ,D.DIR_pic
+                        FROM Movie M
+                        INNER JOIN Director D ON M.Dir_code = D.DIR_code
+                        WHERE M.MV_code = '$value'";
+                        $result = $conn->query($sql);
+
+                        // 결과 출력
+                        if ($result->num_rows > 0) {
+                            while ($row = $result->fetch_assoc()) {
+                                $movieName = $row['MV_name'];
+                                $openingDate = $row['Opening_date'];
+                                $grade = $row['Grade'];
+                                $runningTime = $row['Run_Time'];
+                                $audience = $row['Audi_num'];
+                                $directorName = $row['DIR_name'];
+                                $movieDescription = $row['Mv_Des'];
+                                $directorPicture = $row['DIR_pic'];
+
+                                echo "영화 제목: " . $movieName;
+
+                            }
+                        } else {
+                            echo "영화를 찾을 수 없습니다.";
+                        }
+                        $conn->close();
+                        ?>
+                    </span></p>
+                <p class="white_text">개봉: <span class="white_text" id="movie-release-date"><?= $openingDate ?></span></p>
+                <p class="white_text">등급: <span class="white_text" id="movie-old"><?= $grade ?></span></p>
+                <p class="white_text">러닝 타임: <span class="white_text" id="movie-running-time"><?= $runningTime ?></span></p>
+                <p class="white_text">관객수: <span class="white_text" id="movie-audience"> <?= number_format($audience) ?>명</span></p>
             </div>
         </div>
-        <div class="movie-info">
+
+    
+        <!-- <div class="movie-info">
             <div class="reserv">
                 <p class="white_text">예약하러 가기 ➜ &nbsp; </p>
             </div>
@@ -34,27 +70,28 @@
                 <a href="https://www.lottecinema.co.kr/NLCHS/Ticketing" target="_blank"
                     class="brand-button">롯데시네마</a>&nbsp;
             </div>
-        </div>
+        </div> -->
 
         <div class="movie-info">
             <div class="movie-info-content">
                 <h2>소개</h2>
-                <p class="white_text" id="movie-intro">소개 내용이 있는 부분. 소개 내용이 있는 부분. 소개 내용이 있는 부분. 소개 내용이 있는 부분. 소개 내용이 있는
-                    부분. 소개 내용이 있는 부분. 소개 내용이 있는 부분.</p>
+                <p class="white_text" id="movie-intro"><?= $movieDescription ?></p>
             </div>
         </div>
 
         <div class="movie-info">
             <div class="movie-info-content">
                 <h2 class="info_name">감독</h2>
-
+                            
                 <div class="people_card">
                     <div class="thumb">
                         <img  id="director_img" src="../../img/human_default.png" alt="사진">
                     </div>
                     <div class="title_box">
                         <span class="sub_name" style="max-height: 4rem0;">감독</span>
-                        <strong class="people_name" id="movie-director" style="max-height:  4rem;">감독 이름</strong>
+                        <strong class="people_name" id="movie-director" style="max-height:  4rem;">
+                        <?= $directorName ?>
+                        </strong>
                     </div>
                 </div>
 
@@ -65,11 +102,23 @@
             <div class="movie-info-content">
                 <h2 class="info_name">출연</h2>
                 <div class="movie-actor">
+                <div class="people_card">
+                    <div class="thumb">
+                        <img  id="director_img" src="../../img/human_default.png" alt="사진">
+                    </div>
+                    <div class="title_box">
+                        <span class="sub_name" style="max-height: 4rem0;">감독</span>
+                        <strong class="people_name" id="movie-director" style="max-height:  4rem;">
+                        <?= $directorName ?>
+                        </strong>
+                    </div>
+                </div>
+                
                 </div>
             </div>
         </div>
 
-        <div class="movie-info">
+        <!-- <div class="movie-info">
             <div class="movie-info-content">
                 <h2>평점</h2>
                 <p class="white-text">Metacritic: <span class="white_text movie-rating">메타크리틱 평점 작성</span></p>
@@ -77,7 +126,7 @@
                 <p class="white-text">Rotten Tomatoes: <span class="white_text movie-rating">로튼 토마토 평점 작성</span></p>
                 <p class="white-text">관람객 평점: <span class="white_text movie-rating">관람객 평점 작성</span></p>
             </div>
-        </div>
+        </div> -->
 
         <!-- 리뷰 섹션 -->
         <div class="review-section">
