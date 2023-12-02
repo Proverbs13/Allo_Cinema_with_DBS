@@ -19,7 +19,8 @@
     var theaters = <?php echo json_encode($theaters); ?>;
 </script>
 
-<script type="module" src="../js/map.js"></script>
+<script type="text/javascript" src="../js/apikey.js"></script>
+<script type="text/javascript" src="../js/map.js"></script>
 
 <script src="../js/jquery-3.7.0.min.js"></script>
 <script type="text/javascript">

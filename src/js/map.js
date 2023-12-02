@@ -1,4 +1,3 @@
-import { apiKey } from './apikey.js';
 var myPosition = { lat: 36.625, lng: 127.454 };
 
 window.showMap = showMap;
