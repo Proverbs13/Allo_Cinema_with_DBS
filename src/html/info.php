@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>현재상영작-상세정보페이지</title>
+    <title>영화정보페이지</title>
     <link rel="stylesheet" href="../css/infostyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 </head>
@@ -59,6 +59,7 @@
             </div>
         </div>
 
+    
 
         <div class="movie-info">
             <div class="movie-info-content">
@@ -70,19 +71,19 @@
         <div class="movie-info">
             <div class="movie-info-content">
                 <h2 class="info_name">감독</h2>
-                            
                 <div class="people_card">
-                    <div class="thumb">
-                        <img  id="director_img" src="../../img/human_default.png" alt="사진">
-                    </div>
-                    <div class="title_box">
-                        <span class="sub_name" style="max-height: 4rem0;">감독</span>
-                        <strong class="people_name" id="movie-director" style="max-height:  4rem;">
-                        <?= $directorName ?>
-                        </strong>
-                    </div>
+                    <a href="info_dir.php?value=<?= $movieCode ?>" class="director-link" data-movie-code="<?= $movieCode ?>">
+                        <div class="thumb">
+                            <img id="director_img" src="../../img/human_default.png" alt="사진">
+                        </div>
+                        <div class="title_box">
+                            <span class="sub_name" style="max-height: 4rem;">감독</span>
+                            <strong class="people_name" id="movie-director" style="max-height: 4rem;">
+                                <?= $directorName ?>
+                            </strong>
+                        </div>
+                    </a>
                 </div>
-
             </div>
         </div>
 
