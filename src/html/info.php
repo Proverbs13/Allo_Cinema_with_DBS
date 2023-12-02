@@ -102,17 +102,41 @@
             <div class="movie-info-content">
                 <h2 class="info_name">출연</h2>
                 <div class="movie-actor">
-                <div class="people_card">
-                    <div class="thumb">
-                        <img  id="director_img" src="../../img/human_default.png" alt="사진">
-                    </div>
-                    <div class="title_box">
-                        <span class="sub_name" style="max-height: 4rem0;">감독</span>
-                        <strong class="people_name" id="movie-director" style="max-height:  4rem;">
-                        <?= $directorName ?>
-                        </strong>
-                    </div>
-                </div>
+                <?php
+                    include '../php/dbconfig.php';
+
+                    // 영화 코드
+                    $movieCode = $_GET['value'];
+
+                    // 배우 정보를 가져오는 쿼리
+                    $sql = "SELECT A.ACT_name, A.ACT_pic
+                            FROM Actor A
+                            INNER JOIN Enter E ON A.ACT_code = E.ACT_code
+                            WHERE E.MV_code = '$movieCode'";
+                    $result = $conn->query($sql);
+
+                    // 결과 출력
+                    if ($result->num_rows > 0) {
+                        while ($row = $result->fetch_assoc()) {
+                            $actorName = $row['ACT_name'];
+                            $actorPicture = $row['ACT_pic'];
+
+                            // 배우 카드 출력
+                            echo '<div class="people_card">';
+                            echo '<div class="thumb">';
+                            echo '<img src="' . $actorPicture . '" alt="사진">';
+                            echo '</div>';
+                            echo '<div class="title_box">';
+                            echo '<span class="sub_name" style="max-height: 4rem;">출연 배우</span>';
+                            echo '<strong class="people_name" style="max-height: 4rem;">' . $actorName . '</strong>';
+                            echo '</div>';
+                            echo '</div>';
+                        }
+                    } else {
+                        echo '출연 배우 정보를 찾을 수 없습니다.';
+                    }
+                    $conn->close();
+                ?>
                 
                 </div>
             </div>
