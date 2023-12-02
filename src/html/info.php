@@ -59,18 +59,6 @@
             </div>
         </div>
 
-    
-        <!-- <div class="movie-info">
-            <div class="reserv">
-                <p class="white_text">예약하러 가기 ➜ &nbsp; </p>
-            </div>
-            <div class="button-row">
-                <a href="http://www.cgv.co.kr/ticket/" target="_blank" class="brand-button">CGV</a> &nbsp;
-                <a href="https://www.megabox.co.kr/booking" target="_blank" class="brand-button">메가박스</a> &nbsp;
-                <a href="https://www.lottecinema.co.kr/NLCHS/Ticketing" target="_blank"
-                    class="brand-button">롯데시네마</a>&nbsp;
-            </div>
-        </div> -->
 
         <div class="movie-info">
             <div class="movie-info-content">
@@ -142,15 +130,6 @@
             </div>
         </div>
 
-        <!-- <div class="movie-info">
-            <div class="movie-info-content">
-                <h2>평점</h2>
-                <p class="white-text">Metacritic: <span class="white_text movie-rating">메타크리틱 평점 작성</span></p>
-                <p class="white-text">IMDb: <span class="white_text movie-rating">IMDb 평점 작성</span></p>
-                <p class="white-text">Rotten Tomatoes: <span class="white_text movie-rating">로튼 토마토 평점 작성</span></p>
-                <p class="white-text">관람객 평점: <span class="white_text movie-rating">관람객 평점 작성</span></p>
-            </div>
-        </div> -->
 
         <!-- 리뷰 섹션 -->
         <div class="review-section">
