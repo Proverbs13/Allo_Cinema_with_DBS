@@ -25,21 +25,24 @@
     z-index: 5;
 }
 
-.abcdefg{
-    margin-left: 30px;
+.abcdefg {
+    position: relative; /* 부모 요소를 상대적으로 위치하도록 설정 */
+    padding: 10px;
+    margin-left:30px;
     height: 50px;
     width: 1400px;
     background-color: rgb(32, 29, 29);
     border-radius: 10px;
 }
 
-
-
 #category-name {
-    margin-left: 30px;
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
     color: blueviolet;
+    position: absolute;
+    top: 10px; /* 상대적인 위치 설정 */
+    left: 10px;
+    z-index: 1;
 }
 
 .trailer {
