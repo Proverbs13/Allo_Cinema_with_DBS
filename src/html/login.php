@@ -15,6 +15,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 결과가 존재하는지 확인합니다.
     if ($result->num_rows > 0) {
         // 로그인 성공
+        session_start();
+        $_SESSION['loggedin_user_id'] = $usr_id;
         // 세션 등의 로그인 정보를 설정할 수 있고, 다음 페이지로 리다이렉션합니다.
         header("Location: main.html");
         exit(); // 리다이렉션 이후에 스크립트 실행을 중단합니다.
@@ -23,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         echo "아이디 또는 비밀번호가 올바르지 않습니다.";
     }
 
-    // MySQL 연결을 종료합니다.
-    $conn->close();
+    
 }
 ?>
