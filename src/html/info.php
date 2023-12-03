@@ -35,18 +35,21 @@
                 <h2>기본 정보</h2>
                 <p class="white_text">제목: <span class="white_text" id="movie-title">
                         <?php
-                        include '../php/dbconfig.php';
-
-                        echo '<console.log('.$_SESSION["loggedin_user_id"].')>';
-                        echo '<console.log('.$value.')>';
-                        
                         session_start();
 
-                        echo '<console.log('.$_SESSION["loggedin_user_id"].')>';
-                        echo '<console.log('.$value.')>';
+                        include '../php/dbconfig.php';
 
                         // 현재 URL에서 쿼리 파라미터 값을 읽어옴
                         $value = $_GET['value'];
+
+                        // 현재 로그인한 사용자 ID와 영화 코드
+                        $usr_id = $_SESSION['loggedin_user_id'];
+                        $mv_code = $value;
+
+                        // 데이터베이스에서 현재 사용자가 '즐겨찾기'로 추가한 영화인지 확인
+                        $fav_sql = "SELECT * FROM Saves WHERE USR_ID = '$usr_id' AND MV_code = '$mv_code'";
+                        $fav_result = $conn->query($fav_sql);
+
 
                         // 데이터베이스에서 정보 가져오기
                         // 감독 정보와 영화 정보를 함께 가져오는 쿼리
@@ -74,6 +77,7 @@
                         } else {
                             echo "영화를 찾을 수 없습니다.";
                         }
+
                         $conn->close();
                         ?>
                     </span></p>
@@ -81,10 +85,13 @@
                 <p class="white_text">등급: <span class="white_text" id="movie-old"><?= $grade ?></span></p>
                 <p class="white_text">러닝 타임: <span class="white_text" id="movie-running-time"><?= $runningTime ?></span></p>
                 <p class="white_text">관객수: <span class="white_text" id="movie-audience"> <?= number_format($audience) ?>명</span></p>
-                <form method="post" action="save_favorite.php">
-                    <input type="hidden" name="USR_ID" value="<?php echo $_SESSION['loggedin_user_id']; ?>">
-                    <input type="hidden" name="MV_code" value="<?php echo $value; ?>">
-                    <button type="submit" id="favorite-button" class="favorite-button empty">&#x2764;</button>
+                <form method="post" action="save_favorite.php" id="favorite-form">
+                    <input type="hidden" name="USR_ID" value="<?php echo $usr_id; ?>">
+                    <input type="hidden" name="MV_code" value="<?php echo $mv_code; ?>">
+                    <input type="hidden" name="is_favorite" id="is-favorite" value="<?php echo ($fav_result->num_rows > 0) ? "1" : "0"; ?>">
+                    <button type="submit" id="favorite-button" class="favorite-button">
+                        <?php echo ($fav_result->num_rows > 0) ? "♥" : "♡"; ?>
+                    </button>
                 </form>
             </div>
         </div>
@@ -231,7 +238,7 @@
     <button id="scroll-to-top-button" title="맨 위로 이동" onclick="scrollToTop()">^</button>
 </body>
 <div id="footers"></div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script> -->
 
 <script>
     // 별점 표시를 위한 함수
@@ -255,7 +262,7 @@
 </script>
 
 
-<script src="../js/jquery-3.7.0.min.js"></script>
+<!-- <script src="../js/jquery-3.7.0.min.js"></script> -->
 <script type="text/javascript">
 
     $(document).ready(function () {
