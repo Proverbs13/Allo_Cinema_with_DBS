@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+
+<head>
+    <meta charset="utf-8" />
+    <title>Login page</title>
+    <link rel="stylesheet" type="text/css" href="../css/login.css" />
+</head>
+
+<body>
+    <div id="header-before"></div>
+
+    <div id="login">
+    <form action="login.php" method="POST">
+        <input type="text" name="USR-ID" placeholder="ID" required>
+        <input type="password" name="pwd" placeholder="비밀번호" required>
+        <a href="main.html"><input id="register" type="submit" value="로그인"></a>
+    </form>
+    <a href="user-register.html"><button id="register" >회원 가입</button></a>
+    </div>
+
+    <div id="footers"></div>
+</body>
+
+
+
+
+</html>
+
+  <!-- 헤더/푸터 스크립트 -->
+  <script src="../js/jquery-3.7.0.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $("#header-before").load("header-before.html"); //header.html을 객체화
+      $("#footers").load("footer.html"); //footer.html을 객체화
+      $("#side").load("side.html"); //side.html을 객체화
+      $("#contents").load("contents-now.html"); //contents-now.html을 객체화
+      $("#slide").load("slide.html"); //slide.html을 객체화
+    });
+
+
+
+  </script>
+
+  
