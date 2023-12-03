@@ -146,9 +146,10 @@
                         while ($row = $result->fetch_assoc()) {
                             $actorName = $row['ACT_name'];
                             $actorPicture = $row['ACT_pic'];
-
+                            
                             // 배우 카드 출력
                             echo '<div class="people_card">';
+                            echo '<a href="info_act.php?value=' . strtolower(str_replace(' ', '_', $row["MV_code"])) . '">';
                             echo '<div class="thumb">';
                             echo '<img src="' . $actorPicture . '" alt="사진">';
                             echo '</div>';
@@ -156,6 +157,7 @@
                             echo '<span class="sub_name" style="max-height: 4rem;">출연 배우</span>';
                             echo '<strong class="people_name" style="max-height: 4rem;">' . $actorName . '</strong>';
                             echo '</div>';
+                            echo '</a>';
                             echo '</div>';
                         }
                     } else {

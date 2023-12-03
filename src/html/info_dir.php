@@ -10,38 +10,42 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 </head>
 
+<?php
+
+include '../php/dbconfig.php';
+
+// 현재 URL에서 쿼리 파라미터 값을 읽어옴
+$value = $_GET['value'];
+
+// 데이터베이스에서 배우 정보 가져오기
+$sql = "SELECT DIR_code, DIR_name, DIR_pic FROM Director WHERE DIR_code = '$value'";
+$result = $conn->query($sql);
+
+// 결과 출력
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        $DIR_code = $row['DIR_code'];
+        $DIR_name = $row['DIR_name'];
+        $DIR_pic = $row['DIR_pic'];
+        // 사용하는 코드 형식으로 출력
+        ;
+    }
+} else {
+    echo "감독를 찾을 수 없습니다.";
+}
+$conn->close();
+?>
+
 
 <body>
     <div class="container">
     <div class="movie-info">
-            <img id="movie-image">
+            
+            <img id="director_img" src=<?= $DIR_pic ?> alt="사진">
             <div class="movie-info-content">
                 <h2>기본 정보</h2>
-                <p class="white_text">감독명: <span class="white_text" id="movie-title">
-                    <?php
-                        include '../php/dbconfig.php';
-
-                        // 현재 URL에서 쿼리 파라미터 값을 읽어옴
-                        $value = $_GET['value'];
-
-                        // 데이터베이스에서 배우 정보 가져오기
-                        $sql = "SELECT DIR_code, DIR_name, DIR_pic FROM Director WHERE DIR_code = '$value'";
-                        $result = $conn->query($sql);
-
-                        // 결과 출력
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                $DIR_code = $row['DIR_code'];
-                                $ACT_name = $row['DIR_name'];
-                                $DIR_pic = $row['DIR_name'];
-                                // 사용하는 코드 형식으로 출력
-                                echo  $ACT_name ;
-                            }
-                        } else {
-                            echo "감독를 찾을 수 없습니다.";
-                        }
-                        $conn->close();
-                        ?>
+                <p class="white_text">감독명: <span class="white_text" id="movie-title"><?= $DIR_name ?>
+                    
                 </span></p>
             </div>
         </div>
@@ -55,7 +59,7 @@
                     include '../php/dbconfig.php';
 
                     // 데이터베이스에서 정보 가져오기
-                    $sql = "SELECT MV_code, MV_name, Grade, Audi_num FROM  Movie WHERE Dir_code='$value'";
+                    $sql = "SELECT MV_code, MV_name, Grade, Audi_num ,MV_pic,Mv_Des FROM  Movie WHERE Dir_code='$value'";
                     $result = $conn->query($sql);
 
                     if ($result->num_rows > 0) {
@@ -64,13 +68,13 @@
                             echo '<a href="info.php?value=' . strtolower(str_replace(' ', '_', $row["MV_code"])) . '">';
                             echo '<div class="movie-card">';
                             echo '<div class="video-container">';
-                            // echo '<img src="../../img/poster/' . $row["MV_name"] . ' 포스터.jpg" alt="" class="movie-img-main">';
+                            echo '<img src="' . $row["MV_pic"] . '" class="movie-img-main">';
                             echo '</div>';
                             echo '<div class="movie-text">';
                             echo '<div class="movie-name-main">' . $row["MV_name"] . '</div>';
                             echo '<div class="movie-grade">★ ' . $row["Grade"] . '</div>';
                             echo '<div class="audience-value">' . number_format($row["Audi_num"]) . '명</div>';
-                        
+                            echo '<div class="movie-contents">' . $row["Mv_Des"] . '</div>';
                             // echo '<div class="movie-contents">' . $row["Contents"] . '</div>';
                             echo '</div>';
                             echo '</div>';
@@ -80,6 +84,50 @@
                         echo "0 results";
                     }
                     ?>
+
+
+
+
+                    <?php        
+                    include '../php/dbconfig.php';
+
+                    // // 데이터베이스에서 정보 가져오기
+                    // $sql = "SELECT MV_code, MV_name, Grade, Audi_num FROM Movie LIMIT 10";
+                    // $result = $conn->query($sql);
+
+                    // 데이터베이스에서 정보 가져오기
+                    $sql = "SELECT m.MV_code, m.MV_name, m.Grade, m.MV_pic, m.Audi_num, m.Mv_Des
+                    FROM Movie m
+                    JOIN Enter e ON m.MV_code = e.MV_code
+                    WHERE e.ACT_code = '$value'";
+                    
+                    $result = $conn->query($sql);
+
+
+                    if ($result->num_rows > 0) {
+                        // 결과를 행 단위로 출력
+                        while($row = $result->fetch_assoc()) {
+                            echo '<a href="info.php?value=' . strtolower(str_replace(' ', '_', $row["MV_code"])) . '">';
+                            echo '<div class="movie-card">';
+                            echo '<div class="video-container">';
+                            echo '<img src="' . $row["MV_pic"] . '" class="movie-img-main">';
+                            echo '</div>';
+                            echo '<div class="movie-text">';
+                            echo '<div class="movie-name-main">' . $row["MV_name"] . '</div>';
+                            echo '<div class="movie-grade">★ ' . $row["Grade"] . '</div>';
+                            echo '<div class="audience-value">' . number_format($row["Audi_num"]) . '명</div>';
+                        
+                            echo '<div class="movie-contents">' . $row["Mv_Des"] . '</div>';
+                            echo '</div>';
+                            echo '</div>';
+                            echo '</a>';
+                        }
+                    }
+                    ?>
+
+
+
+
                 </div>
             </div>
         </div>
