@@ -1,5 +1,5 @@
 <?php
-include('dbconfig.php');
+include('../php/dbconfig.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // 로그인 폼에서 전송된 데이터를 변수에 저장합니다.

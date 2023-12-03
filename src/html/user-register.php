@@ -1,5 +1,5 @@
 <?php
-include('dbconfig.php');
+include('../php/dbconfig.php');
 
 // POST 요청을 받았을 때만 회원가입 처리를 수행합니다.
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
