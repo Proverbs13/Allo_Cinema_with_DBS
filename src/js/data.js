@@ -15,7 +15,7 @@ var movies = {
 var infoes = [
     {
         img: '가오갤 포스터.jpg',
-        title: '가디언즈오브 갤럭시 : Volume 3',
+        title: '가디언즈오브 갤럭시 !!!!!!!!!!!!!!!!!!!!!!!!1: Volume 3',
         date: '2023.05.03',
         old: '12세 관람가',
         theme: '액션, 모험, SF',
