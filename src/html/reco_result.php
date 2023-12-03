@@ -76,7 +76,7 @@
       $("#side").load("side.html"); //side.html을 객체화
       $("#contents").load("contents-now.html"); //contents-now.html을 객체화
       $("#slide").load("slide.html"); //slide.html을 객체화
-      $("#Reco_slide_left").load("Reco_slide_left"); //slide.html을 객체화
+      $("#Reco_slide_left").load("Reco_slide_left.html"); //slide.html을 객체화
       $("#Reco_slide_right").load("Reco_slide_right.html"); //slide.html을 객체화
     });
 
