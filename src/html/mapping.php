@@ -1,5 +1,5 @@
 <?php
-include '/Applications/XAMPP/xamppfiles/htdocs/Allo_Cinema_with_DBS/src/php/dbconfig.php';
+include '../php/dbconfig.php';
 
 // 연결 오류 확인
 if ($conn->connect_error) {
