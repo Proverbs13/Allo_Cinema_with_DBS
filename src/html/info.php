@@ -13,7 +13,8 @@
 <body>
     <div class="container">
         <div class="movie-info">
-            <img id="movie-image" src="../../img/poster/가오갤 포스터.jpg">
+            <img id="movie-image" src="../../img/poster/가오갤 포스터.jpg"> 
+            <!-- echo '<img src="' . $MV_pic . '" alt="영화 포스터">'; -->
             <div class="movie-info-content">
                 <h2>기본 정보</h2>
                 <p class="white_text">제목: <span class="white_text" id="movie-title">
@@ -27,7 +28,7 @@
 
                         // 데이터베이스에서 정보 가져오기
                         // 감독 정보와 영화 정보를 함께 가져오는 쿼리
-                        $sql = "SELECT M.MV_name, M.Opening_date, M.Grade, M.Run_Time, M.Audi_num, D.DIR_code, D.DIR_name ,M.Mv_Des ,D.DIR_pic
+                        $sql = "SELECT M.MV_name, M.Opening_date, M.Grade, M.Run_Time, M.Audi_num, M.MV_pic,D.DIR_code, D.DIR_name ,M.Mv_Des ,D.DIR_pic
                         FROM Movie M
                         INNER JOIN Director D ON M.Dir_code = D.DIR_code
                         WHERE M.MV_code = '$value'";
@@ -36,6 +37,7 @@
                         // 결과 출력
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
+                                $MV_pic = $row['MV_pic'];
                                 $movieName = $row['MV_name'];
                                 $openingDate = $row['Opening_date'];
                                 $grade = $row['Grade'];
@@ -47,6 +49,7 @@
                                 $directorcode = $row['DIR_code'];
 
                                 echo  $movieName;
+                                
 
                             }
                         } else {
