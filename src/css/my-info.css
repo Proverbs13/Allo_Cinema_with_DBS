@@ -338,7 +338,6 @@ body::-webkit-scrollbar-track {
 
 /* 푸터 스타일 */
 #footers {
-    position: fixed;
     bottom: 0;
     left: 0;
     width: 100%;
