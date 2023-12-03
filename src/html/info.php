@@ -199,10 +199,13 @@
 
                             echo '<li class="review-item">';
                             echo '<div class="name">' . $username . '</div>';
-                            echo '<div class="ratingStars" id="rating_' . $username . '"></div>';
+                            // Add the code to display stars based on the rating
+                            for ($i = 1; $i <= $rating; $i++) {
+                            echo '★';
+                            }
                             echo '<div class="content">' . $content . '</div>';
                             echo '</li><br>';
-                            echo "<script>displayRating($rating, 'rating_$username');</script>";
+                            
                         }
                         echo '</ul>';
                         echo '</div>';
@@ -237,33 +240,11 @@
         
         </div>
 
-       
     </div>
     <button id="scroll-to-top-button" title="맨 위로 이동" onclick="scrollToTop()">^</button>
 </body>
 <div id="footers"></div>
 <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script> -->
-
-<script>
-// 별점 표시를 위한 함수
-window.onload = function() {
-  function displayRating(ratingStars, containerId) {
-      const ratingContainer = document.getElementById(containerId);
-  
-      if (ratingContainer) {
-          for (let i = 0; i < 5; i++) {
-              const star = document.createElement("span");
-              star.className = "star";
-              if (i < ratingStars) {
-                  star.classList.add("filled");
-              }
-              star.textContent = "★";
-              ratingContainer.appendChild(star);
-          }
-      }
-  }
-}
-</script>
 
 
 <!-- <script src="../js/jquery-3.7.0.min.js"></script> -->
