@@ -133,12 +133,12 @@ h3 {
 }
 
 .review-list {
-    
     list-style-type: none;
     padding: 0;
 }
 
 .review-item {
+    height: 700px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     padding: 10px;
@@ -167,6 +167,7 @@ h3 {
 
 .review-item .ratingStars{
     color: white;
+    height: 10px;
 }
 
 #scroll-to-top-button {
@@ -332,4 +333,13 @@ body::-webkit-scrollbar-track {
 
 .white_text{
     color: white;
+}
+
+.star {
+    font-size: 20px;
+    color: #ddd;
+}
+
+.star.filled {
+    color: #f5c518;
 }

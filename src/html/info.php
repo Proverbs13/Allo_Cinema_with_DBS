@@ -19,9 +19,11 @@
                 <p class="white_text">제목: <span class="white_text" id="movie-title">
                         <?php
                         include '../php/dbconfig.php';
-
-                        // 현재 URL에서 쿼리 파라미터 값을 읽어옴
                         $value = $_GET['value'];
+
+                        session_start();
+                        $_SESSION['mv_code'] = $value;
+                        // 현재 URL에서 쿼리 파라미터 값을 읽어옴
 
                         // 데이터베이스에서 정보 가져오기
                         // 감독 정보와 영화 정보를 함께 가져오는 쿼리
@@ -132,48 +134,44 @@
         </div>
 
 
-        <!-- 리뷰 섹션 -->
-        <?php
-        include '../php/dbconfig.php';
-        // 영화 코드
-        $movieCode = $_GET['value'];
-        // 리뷰 정보를 가져오는 쿼리
-        $sql = "SELECT U.USR_name, R.MV_code, R.rating, R.content 
-        FROM Review R
-        INNER JOIN User U ON R.USR_ID = U.USR_ID
-        WHERE R.MV_code = '$value'";
+                <!-- 리뷰 섹션 -->
+                <?php
+                    include '../php/dbconfig.php';
+                    $movieCode = $_GET['value'];
+                    $sql = "SELECT U.USR_name, R.MV_code, R.rating, R.content 
+                    FROM Review R
+                    INNER JOIN User U ON R.USR_ID = U.USR_ID
+                    WHERE R.MV_code = '$value'";
 
-        $result = $conn->query($sql);
+                    $result = $conn->query($sql);
 
-        // 결과 출력
-        if ($result->num_rows > 0) {
-            echo '<div class="review-section">';
-            echo '<h2>리뷰</h2>';
-            echo '<ul class="review-list">';
-            while ($row = $result->fetch_assoc()) {
-                $username = $row['USR_name'];
-                $movieCode = $row['MV_code'];
-                $rating = $row['rating'];
-                $content = $row['content'];
+                    if ($result->num_rows > 0) {
+                        echo '<div class="review-section">';
+                        echo '<h2>리뷰</h2>';
+                        echo '<ul class="review-list">';
+                        while ($row = $result->fetch_assoc()) {
+                            $username = $row['USR_name'];
+                            $movieCode = $row['MV_code'];
+                            $rating = $row['rating'];
+                            $content = $row['content'];
 
-                echo '<li class="review-item">';
-                echo '<div class="name">' . $username . '</div>';
-                echo '<div class="ratingStars">';
-                // 별점을 표시하는 JavaScript 함수 호출
-                echo '<script>displayRating(' . $rating . ').appendTo(".ratingStars");</script>';
-                echo '</div>';
-                echo '<div class="content">' . $content . '</div>';
-                echo '</li><br>';
-            }
-            echo '</ul>';
-            echo '</div>';
-        } else {
-            echo '리뷰가 없습니다.';
-        }
-        $conn->close();
-        ?>
+                            echo '<li class="review-item">';
+                            echo '<div class="name">' . $username . '</div>';
+                            echo '<div class="ratingStars" id="rating_' . $username . '"></div>';
+                            echo '<div class="content">' . $content . '</div>';
+                            echo '</li><br>';
+                            echo "<script>displayRating($rating, 'rating_$username');</script>";
+                        }
+                        echo '</ul>';
+                        echo '</div>';
+                    } else {
+                        echo '리뷰가 없습니다.';
+                    }
+                    $conn->close();
+                    ?>
+        
 
-                <form method="post" action="user-register.php">
+                <form action="review-register.php" method="POST">
             <div class="comment-input">
                 <div class="white_text">별점</div>
                 <div class="rating">
@@ -204,24 +202,24 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 
 <script>
-    // 별점 표시를 위한 함수
-    function displayRating(ratingStars) {
-        const ratingContainer = $("<div>", { class: "ratingStars" });
-
-        for (let i = 0; i < 5; i++) {
-            const star = $("<span>", { class: "star" });
-            if (i < ratingStars) {
-                star.text("★");
-            } else {
-                star.text("☆");
-            }
-            ratingContainer.append(star);
-        }
-
-        return ratingContainer;
-    }
-
-    // 기타 JavaScript 코드 생략
+// 별점 표시를 위한 함수
+window.onload = function() {
+  function displayRating(ratingStars, containerId) {
+      const ratingContainer = document.getElementById(containerId);
+  
+      if (ratingContainer) {
+          for (let i = 0; i < 5; i++) {
+              const star = document.createElement("span");
+              star.className = "star";
+              if (i < ratingStars) {
+                  star.classList.add("filled");
+              }
+              star.textContent = "★";
+              ratingContainer.appendChild(star);
+          }
+      }
+  }
+}
 </script>
 
 
@@ -236,37 +234,6 @@
         $("#contents").load("contents-now.html");
         $("#slide").load("slide.html");
     });
-
-    $(document).ready(function () {
-        function changePage1() {
-            $("#contents").load("contents-now.html");
-            var newContent = '현재 상영작';
-            $('#category-name').html(newContent);
-        }
-
-
-        $('#now').click(function () {
-            changePage1();
-        });
-
-
-    });
-
-    $(document).ready(function () {
-        function changePage2() {
-            $("#contents").load("contents-future.html");
-            var newContent = '개봉 예정작';
-            $('#category-name').html(newContent);
-        }
-
-
-        $('#future').click(function () {
-            changePage2();
-        });
-
-
-    });
-
 
 </script>
 <script src="../js/data.js"></script>
