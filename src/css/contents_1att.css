@@ -8,6 +8,14 @@ hr{
     width: 1400px;
 }
 
+#movie-image{
+    height: 200px;
+    width: 250px;
+    border-radius: 20%;
+    border: 2px solid white; /* 하얀색 테두리 두께와 스타일 지정 */
+
+}
+
 
 #now{
     position: absolute;
