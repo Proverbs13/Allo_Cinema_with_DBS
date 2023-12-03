@@ -59,6 +59,13 @@
 
     </div>
     <button id="scroll-to-top-button" title="맨 위로 이동" onclick="scrollToTop()">^</button>
+    <aside id="leftSlide" class="slidePanel" style="background-color: white;">
+      <!-- 왼쪽 슬라이드에 들어갈 체크박스와 내용 -->
+    </aside>
+    <aside id="rightSlide" class="slidePanel" style="background-color: white;">
+      <!-- 체크박스 선택 후 나타날 오른쪽 슬라이드 내용 -->
+    </aside>
+    <script src="../js/script.js"></script>
 </body>
 <div id="footers"></div>
 </html>
