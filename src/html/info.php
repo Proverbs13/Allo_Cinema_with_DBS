@@ -223,13 +223,13 @@
                 <div class="rating">
                     <input type="checkbox" class="star" id="star-1" name="rating" value="1">
                     <label for="star-1"></label>
-                    <input type="checkbox" class="star" id="star-2" value="2">
+                    <input type="checkbox" class="star" id="star-2" name="rating"  value="2">
                     <label for="star-2"></label>
-                    <input type="checkbox" class="star" id="star-3" value="3">
+                    <input type="checkbox" class="star" id="star-3" name="rating" value="3">
                     <label for="star-3"></label>
-                    <input type="checkbox" class="star" id="star-4" value="4">
+                    <input type="checkbox" class="star" id="star-4" name="rating" value="4">
                     <label for="star-4"></label>
-                    <input type="checkbox" class="star" id="star-5" value="5">
+                    <input type="checkbox" class="star" id="star-5" name="rating" value="5">
                     <label for="star-5"></label>
                     </div>
                 <textarea name="content" placeholder="어떤 소감을 느끼셨나요?"></textarea>
@@ -260,4 +260,26 @@
     });
 
 </script>
+<script>
+const checkboxes = Array.from(document.querySelectorAll('.rating input[type="checkbox"]'));
+        function updateRating() {
+            const selectedCheckbox = checkboxes.find((checkbox) => checkbox.checked);
+            let selectedIndex = selectedCheckbox ? checkboxes.indexOf(selectedCheckbox) : -1;
+
+            if (selectedIndex >= 0) {
+                checkboxes.forEach((checkbox, i) => {
+                    checkbox.checked = i <= selectedIndex;
+                });
+            }
+        }
+
+        // 체크박스 받아오기
+        checkboxes.forEach((checkbox) => {
+            checkbox.addEventListener('click', () => {
+                updateRating();
+            });
+        });
+
+
+    </script>
 <script src="../js/data.js"></script>
