@@ -45,8 +45,8 @@ gifImage.addEventListener('mouseleave', function() {
 });
 
 slideItem4.addEventListener('mouseenter', function() {
-  if (gifImage.src !== '../../video/분노의 질주.mp4') {
-    gifImage.src = '../../video/분노의 질주.mp4';
+  if (gifImage.src !== '../../video/아바타_ 물의 길.mp4') {
+    gifImage.src = '../../video/아바타_ 물의 길.mp4';
   }
   gifImage.style.display = 'block';
   gifImage.muted=false;
