@@ -10,14 +10,8 @@
 </head>
 
 
-<body>
-    <div class="container">
-        <div class="movie-info">
-            <img id="movie-image" src="../../img/poster/가오갤 포스터.jpg">
-            <div class="movie-info-content">
-                <h2>기본 정보</h2>
-                <p class="white_text">제목: <span class="white_text" id="movie-title">
                         <?php
+
                         include '../php/dbconfig.php';
 
                         // 현재 URL에서 쿼리 파라미터 값을 읽어옴
@@ -76,7 +70,7 @@
                     <a href="info_dir.php?value=<?= $directorcode ?>" class="director-link">
                         <div class="thumb">
                         
-                            <img id="director_img" src="../../img/human_default.png" alt="사진">
+                            <img id="director_img" src=<?= $directorPicture ?> alt="사진">
                         
                         </div>
 
