@@ -1,0 +1,129 @@
+.category{
+    margin-left: 950px;
+}
+
+
+hr{
+    margin-top: 10px;
+    width: 1400px;
+}
+
+
+#now{
+    position: absolute;
+    top: 81.5%;
+    right:  19%;
+    font-size:30px;
+    color: white;
+}
+
+
+#future{
+    position: absolute;
+    right:  12%;
+    top: 81.5%;
+    font-size:30px;
+    color: white;
+}
+
+#future:hover{
+    font-weight: bold;
+}
+
+#now:hover{
+    font-weight: bold;
+}
+
+.movies{
+    width: 1400px   ;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+hr{
+    border-color: #000000;
+}
+
+.movie-card{
+    display: flex;
+    height: 300px;
+    width: 695px;
+    border: 1px solid #222020;
+    border-radius: 10px;
+    box-shadow: 0px 1px 7px 2px #202021;
+    border-bottom: 1px solid #0d0e0f;
+    transition: all 0.3s;
+
+}
+
+.movie-card:hover{
+    width: 700px;
+    background-color: rgb(33, 28, 28);
+
+}
+
+.movie-img-main{
+    margin-top: 10px;
+    margin-bottom: 5px;
+    width: 200px;
+    height: 280px;
+    margin-left: 10px;
+    margin-right: 10px;
+    box-shadow: 0px 1px 7px 2px #25262c;
+    border-bottom: 1px solid #1a1d1f
+}
+
+
+
+
+.movie-text{
+    margin-left: 20px;
+    margin-top: 20px;
+    color :rgb(255, 255, 255) 
+    
+}
+
+
+.movie-name-main{
+    font-size: 24px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    transition: all 0.3s;
+}
+
+.movie-name-main :hover{
+    font-weight: bold;
+}
+
+.movie-grade{
+    margin-bottom: 20px;
+    color :rgb(255, 255, 255) 
+}
+
+.movie-grade :hover{
+    font-weight: bold;
+}
+
+.audience-value{
+    margin-bottom: 30px;
+    color :rgb(255, 255, 255) !important;
+}
+
+.audience-value :hover{
+    font-weight: bold;
+}
+
+
+.movie-contents{
+    font-size: 20px;
+    width: 400px;
+    height: 110px;
+    margin-right: 70%;
+    color :rgb(255, 255, 255) !important;
+    overflow: hidden;
+    text-overflow:clip;
+}
+
+.movie-contents :hover{
+    font-weight: bold;
+}
