@@ -1,18 +1,26 @@
 document.addEventListener('DOMContentLoaded', function() {
-    var recommendationBtn = document.getElementById('recommendationBtn');
-    if (recommendationBtn) {
-        recommendationBtn.addEventListener('click', function() {
-            console.log('recommendationBtn clicked'); // 콘솔에 메시지 출력
-            document.getElementById('leftSlide').style.transform = 'translateX(300px)';
-        });
-    }
+    var leftSlide = document.getElementById('Reco_slide_left');
+    leftSlide.style.transform = 'translateX(0)'; // 초기 위치
+    leftSlide.style.transition = 'transform 0.5s ease'; // 부드러운 움직임을 위한 transition 설정
 
-    var checkboxes = document.querySelectorAll('#leftSlide input[type="checkbox"]');
-    checkboxes.forEach(function(checkbox) {
+    var checkboxesLeft = document.querySelectorAll('#leftSlide input[type="checkbox"]');
+    checkboxesLeft.forEach(function(checkbox) {
         checkbox.addEventListener('change', function() {
             if (this.checked) {
                 document.getElementById('leftSlide').style.transform = 'translateX(-300px)';
-                document.getElementById('rightSlide').style.transform = 'translateX(-300px)';
+            } else {
+                document.getElementById('leftSlide').style.transform = 'translateX(0)';
+            }
+        });
+    });
+
+    var checkboxesRight = document.querySelectorAll('#rightSlide input[type="checkbox"]');
+    checkboxesRight.forEach(function(checkbox) {
+        checkbox.addEventListener('change', function() {
+            if (this.checked) {
+                document.getElementById('rightSlide').style.transform = 'translateX(300px)';
+            } else {
+                document.getElementById('rightSlide').style.transform = 'translateX(0)';
             }
         });
     });

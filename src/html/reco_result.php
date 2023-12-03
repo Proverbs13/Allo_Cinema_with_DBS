@@ -16,30 +16,8 @@
     <title> 장르별 추천 페이지 </title>
     <link rel="stylesheet" href="../css/infostyle.css">
     <link rel="stylesheet" type="text/css" href="../css/contents_1att.css">
+    <link rel="stylesheet" type="text/css" href="../css/reco_result.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-    <style>
-        .genre-question {
-            font-size: 20px;
-            margin-bottom: 20px;
-        }
-
-        .genre-list {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .genre-list a {
-            display: block;
-            margin: 10px;
-            padding: 8px 16px;
-            background-color: #f2f2f2;
-            color: #333;
-            border-radius: 4px;
-            text-decoration: none;
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
     <div class="container">
@@ -79,7 +57,7 @@
                                 FROM Movie m
                                 JOIN Genre g ON m.GR_code = g.GR_code
                                 WHERE g.GR_name = '$genre'";
-                        echo $genre;
+                        echo '<div class="gerne">' . $genre . '</div>';
                     }
 
                     $result = $conn->query($sql);
