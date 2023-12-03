@@ -1,5 +1,5 @@
 <?php
-$servername = "54.180.124.30:50661";
+$servername = "54.180.124.30:57874";
 $username = "root";
 $password = "1234";
 $dbname = "FILM_INDUSTRY"; // 데이터베이스 이름

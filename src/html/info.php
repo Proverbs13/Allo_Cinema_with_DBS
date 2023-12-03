@@ -76,11 +76,11 @@
         <div class="movie-info">
             <div class="movie-info-content">
                 <h2 class="info_name">감독</h2>
+                
                 <div class="people_card">
                     <a href="info_dir.php?value=<?= $directorcode ?>" class="director-link">
                         <div class="thumb">
-                        
-                            <img id="director_img" src="../../img/human_default.png" alt="사진">
+                            <img id="movie-image" src=<?= $directorPicture ?>>
                         
                         </div>
 
@@ -185,6 +185,7 @@
 
                 <form action="review-register.php" method="POST">
             <div class="comment-input">
+                <br>
                 <div class="white_text">별점</div>
                 <div class="rating">
                     <input type="checkbox" class="star" id="star-1" name="rating" value="1">
