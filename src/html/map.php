@@ -12,7 +12,7 @@
 <div id="footers"></div>
 </html>
 
-<?php include '../php/mapping.php'; ?>
+<?php include 'mapping.php'; ?>
 
 <script type="text/javascript">
     // PHP에서 가져온 데이터를 JavaScript 변수로 할당
