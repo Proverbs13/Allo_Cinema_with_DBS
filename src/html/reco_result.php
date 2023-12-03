@@ -59,12 +59,8 @@
 
     </div>
     <button id="scroll-to-top-button" title="맨 위로 이동" onclick="scrollToTop()">^</button>
-    <aside id="leftSlide" class="slidePanel" style="background-color: white;">
-      <!-- 왼쪽 슬라이드에 들어갈 체크박스와 내용 -->
-    </aside>
-    <aside id="rightSlide" class="slidePanel" style="background-color: white;">
-      <!-- 체크박스 선택 후 나타날 오른쪽 슬라이드 내용 -->
-    </aside>
+    <div id="Reco_slide_left"></div>
+    <div id="Reco_slide_right"></div>
     <script src="../js/script.js"></script>
 </body>
 <div id="footers"></div>
@@ -80,6 +76,8 @@
       $("#side").load("side.html"); //side.html을 객체화
       $("#contents").load("contents-now.html"); //contents-now.html을 객체화
       $("#slide").load("slide.html"); //slide.html을 객체화
+      $("#Reco_slide_left").load("Reco_slide_left"); //slide.html을 객체화
+      $("#Reco_slide_right").load("Reco_slide_right.html"); //slide.html을 객체화
     });
 
     // 스크롤 관련 -----------------------------------------------------------------

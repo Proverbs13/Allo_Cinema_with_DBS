@@ -60,10 +60,12 @@
                         echo '<li class="review-item">';
                         echo '<div class="name">' . $mvname . '</div>';
                         echo '<div class="name">' . $username . '</div>';
-                        echo '<div class="ratingStars" id="rating_' . $username . '"></div>';
+                        // Add the code to display stars based on the rating
+                        for ($i = 1; $i <= $rating; $i++) {
+                            echo '★';
+                            }
                         echo '<div class="content">' . $content . '</div>';
                         echo '</li><br>';
-                        echo "<script>displayRating($rating, 'rating_$username');</script>";
                     }
                     echo '</ul>';
                     echo '</div>';
