@@ -23,7 +23,7 @@
     <div class="container">
         <div class="genre-question">어떤 장르를 선호하세요?</div>
         <div class="genre-list">
-            <a href="?genre=all">전체</a>
+            <a href="?genre=전체">전체</a>
             <a href="?genre=판타지">판타지</a>
             <a href="?genre=코미디">코미디</a>
             <a href="?genre=어드벤처">어드벤처</a>
@@ -48,16 +48,18 @@
 
                     // 장르에 따라 쿼리 작성
                     $genre = $_GET['genre'];
-                    if ($genre == 'all') {
+                    if ($genre == '전체') {
                         $sql = "SELECT m.MV_code, m.MV_name, m.Grade, m.MV_pic, m.Audi_num, m.Mv_Des
                                 FROM Movie m";
+
+                        echo '<div class="gerne" >' . $genre . '</div>';
                     } else {
                         $genre = mysqli_real_escape_string($conn, $genre);
                         $sql = "SELECT m.MV_code, m.MV_name, m.Grade, m.MV_pic, m.Audi_num, m.Mv_Des
                                 FROM Movie m
                                 JOIN Genre g ON m.GR_code = g.GR_code
                                 WHERE g.GR_name = '$genre'";
-                        echo '<div class="gerne">' . $genre . '</div>';
+                        echo '<div class="gerne" >' . $genre . '</div>';
                     }
 
                     $result = $conn->query($sql);
