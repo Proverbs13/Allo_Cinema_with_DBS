@@ -9,7 +9,9 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 </head>
 
+
 <?php
+
                         include '../php/dbconfig.php';
                         $value = $_GET['value'];
 
@@ -19,6 +21,7 @@
 
                         // 데이터베이스에서 정보 가져오기
                         // 감독 정보와 영화 정보를 함께 가져오는 쿼리
+
                         $sql = "SELECT M.MV_name, M.Opening_date, M.Grade, M.MV_pic ,M.Run_Time, M.Audi_num, D.DIR_code, D.DIR_name ,M.Mv_Des ,D.DIR_pic
                         FROM Movie M
                         INNER JOIN Director D ON M.Dir_code = D.DIR_code
@@ -28,6 +31,7 @@
                         // 결과 출력
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
+                                $MV_pic = $row['MV_pic'];
                                 $movieName = $row['MV_name'];
                                 $openingDate = $row['Opening_date'];
                                 $grade = $row['Grade'];
