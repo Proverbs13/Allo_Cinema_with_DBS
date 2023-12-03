@@ -45,7 +45,7 @@ hr{
 .movies{
     width: 1400px   ;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     flex-wrap: wrap;
 }
 hr{
