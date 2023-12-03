@@ -13,7 +13,7 @@
 <body>
     <div class="container">
         <div class="movie-info">
-            <img id="movie-image">
+            <img id="movie-image" src="../../img/poster/가오갤 포스터.jpg">
             <div class="movie-info-content">
                 <h2>기본 정보</h2>
                 <p class="white_text">제목: <span class="white_text" id="movie-title">
@@ -25,7 +25,7 @@
 
                         // 데이터베이스에서 정보 가져오기
                         // 감독 정보와 영화 정보를 함께 가져오는 쿼리
-                        $sql = "SELECT M.MV_name, M.Opening_date, M.Grade, M.Run_Time, M.Audi_num, D.DIR_name ,M.Mv_Des ,D.DIR_pic
+                        $sql = "SELECT M.MV_name, M.Opening_date, M.Grade, M.Run_Time, M.Audi_num, D.DIR_code, D.DIR_name ,M.Mv_Des ,D.DIR_pic
                         FROM Movie M
                         INNER JOIN Director D ON M.Dir_code = D.DIR_code
                         WHERE M.MV_code = '$value'";
@@ -42,8 +42,9 @@
                                 $directorName = $row['DIR_name'];
                                 $movieDescription = $row['Mv_Des'];
                                 $directorPicture = $row['DIR_pic'];
+                                $directorcode = $row['DIR_code'];
 
-                                echo "영화 제목: " . $movieName;
+                                echo  $movieName;
 
                             }
                         } else {
@@ -72,10 +73,13 @@
             <div class="movie-info-content">
                 <h2 class="info_name">감독</h2>
                 <div class="people_card">
-                    <a href="info_dir.php?value=<?= $movieCode ?>" class="director-link" data-movie-code="<?= $movieCode ?>">
+                    <a href="info_dir.php?value=<?= $directorcode ?>" class="director-link">
                         <div class="thumb">
+                        
                             <img id="director_img" src="../../img/human_default.png" alt="사진">
+                        
                         </div>
+
                         <div class="title_box">
                             <span class="sub_name" style="max-height: 4rem;">감독</span>
                             <strong class="people_name" id="movie-director" style="max-height: 4rem;">
@@ -86,6 +90,8 @@
                 </div>
             </div>
         </div>
+
+
 
         <div class="movie-info">
             <div class="movie-info-content">
@@ -98,7 +104,7 @@
                     $movieCode = $_GET['value'];
 
                     // 배우 정보를 가져오는 쿼리
-                    $sql = "SELECT A.ACT_name, A.ACT_pic
+                    $sql = "SELECT A.ACT_code, A.ACT_name, A.ACT_pic
                             FROM Actor A
                             INNER JOIN Enter E ON A.ACT_code = E.ACT_code
                             WHERE E.MV_code = '$movieCode'";
@@ -107,11 +113,14 @@
                     // 결과 출력
                     if ($result->num_rows > 0) {
                         while ($row = $result->fetch_assoc()) {
+                            $actorCode = $row['ACT_code'];
                             $actorName = $row['ACT_name'];
                             $actorPicture = $row['ACT_pic'];
 
+
                             // 배우 카드 출력
                             echo '<div class="people_card">';
+                            echo '<a href="info_act.php?value=' . $actorCode . '">';
                             echo '<div class="thumb">';
                             echo '<img src="' . $actorPicture . '" alt="사진">';
                             echo '</div>';
@@ -119,6 +128,7 @@
                             echo '<span class="sub_name" style="max-height: 4rem;">출연 배우</span>';
                             echo '<strong class="people_name" style="max-height: 4rem;">' . $actorName . '</strong>';
                             echo '</div>';
+                            echo '</a>';
                             echo '</div>';
                         }
                     } else {
