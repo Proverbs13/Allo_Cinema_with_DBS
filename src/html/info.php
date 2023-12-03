@@ -7,6 +7,23 @@
     <title>영화정보페이지</title>
     <link rel="stylesheet" href="../css/infostyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+
+    <style>
+    .favorite-button {
+        background-color: transparent;
+        border: none;
+        color: red;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 0;
+        outline: none;
+    }
+
+    .favorite-button:hover {
+        color: #ff4081;
+    }
+    </style>
+
 </head>
 
 
@@ -19,6 +36,14 @@
                 <p class="white_text">제목: <span class="white_text" id="movie-title">
                         <?php
                         include '../php/dbconfig.php';
+
+                        echo '<console.log('.$_SESSION["loggedin_user_id"].')>';
+                        echo '<console.log('.$value.')>';
+                        
+                        session_start();
+
+                        echo '<console.log('.$_SESSION["loggedin_user_id"].')>';
+                        echo '<console.log('.$value.')>';
 
                         // 현재 URL에서 쿼리 파라미터 값을 읽어옴
                         $value = $_GET['value'];
@@ -56,6 +81,11 @@
                 <p class="white_text">등급: <span class="white_text" id="movie-old"><?= $grade ?></span></p>
                 <p class="white_text">러닝 타임: <span class="white_text" id="movie-running-time"><?= $runningTime ?></span></p>
                 <p class="white_text">관객수: <span class="white_text" id="movie-audience"> <?= number_format($audience) ?>명</span></p>
+                <form method="post" action="save_favorite.php">
+                    <input type="hidden" name="USR_ID" value="<?php echo $_SESSION['loggedin_user_id']; ?>">
+                    <input type="hidden" name="MV_code" value="<?php echo $value; ?>">
+                    <button type="submit" id="favorite-button" class="favorite-button empty">&#x2764;</button>
+                </form>
             </div>
         </div>
 
