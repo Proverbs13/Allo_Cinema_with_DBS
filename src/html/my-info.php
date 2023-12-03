@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>내 정보 페이지</title>
     <link rel="stylesheet" href="../css/my-info.css">
+    <link rel="stylesheet" type="text/css" href="../css/contents_1att.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -70,13 +71,39 @@
                     echo '리뷰가 없습니다.';
                 }
 
-                //찜 컴테이너
-                echo '<div class="container">';
-                echo '<div class="movie-info">';
-                echo '<div class="movie-info-content">';
-                echo '<h2>찜</h2>';
-                echo '</div>';
-                echo '</div>';
+                // 찜 목록 조회
+                $sql3 = "SELECT M.MV_pic, M.MV_name, M.Audi_num, M.Mv_Des, M.Grade
+                FROM Saves S
+                INNER JOIN Movie M ON S.MV_code = M.MV_code
+                WHERE S.USR_ID = '$loggedInUserID'";
+                $result3 = $conn->query($sql3);
+
+                if ($result3->num_rows > 0) {
+                    echo '<div class="movie-info">';
+                    echo '<div class="movie-info-content">';
+                    echo '<h2>찜</h2>';
+                    echo '<div class="movies">'; // 영화들을 담을 컨테이너
+                
+                    while ($row3 = $result3->fetch_assoc()) {
+                        echo '<div class="movie-card">';
+                        echo '<div class="video-container">';
+                        echo '<img src="' . $row3['MV_pic'] . '" alt="Movie Image" class="movie-image-main">';
+                        echo '</div>';
+                        echo '<div class="movie-text">';
+                        echo '<div class="movie-name-main">' . $row3['MV_name'] . '</div>';
+                        echo '<div class="movie-grade">★ ' . $row3['Grade'] . '</div>';
+                        echo '<div class="audience-value">' . number_format($row3['Audi_num']) . '명</div>';
+                        echo '<div class="movie-contents">' . $row3['Mv_Des'] . '</div>';
+                        echo '</div>'; // movie-text 종료
+                        echo '</div>'; // movie-card 종료
+                    }
+                
+                    echo '</div>'; // movies 종료
+                    echo '</div>'; // movie-info-content 종료
+                    echo '</div>'; // movie-info 종료
+                } else {
+                    echo '찜 목록이 없습니다.';
+                }
             }
         } else {
             echo "사용자 정보를 찾을 수 없습니다.";
