@@ -272,6 +272,26 @@ const checkboxes = Array.from(document.querySelectorAll('.rating input[type="che
                 });
             }
         }
+        
+        // 스크롤 관련 -----------------------------------------------------------------
+        function scrollToTop() {
+            $('html, body').animate({ scrollTop: 0 }, 'smooth');
+        }
+
+        $(window).scroll(function () {
+            const scrollPosition = $(this).scrollTop();
+            const scrollToTopButton = $("#scroll-to-top-button");
+
+            if (scrollPosition > 200) {
+                scrollToTopButton.show();
+            } else {
+                scrollToTopButton.hide();
+            }
+        });
+
+        $("#scroll-to-top-button").click(function () {
+            scrollToTop();
+        });
 
         // 체크박스 받아오기
         checkboxes.forEach((checkbox) => {
