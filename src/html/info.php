@@ -7,49 +7,71 @@
     <title>영화정보페이지</title>
     <link rel="stylesheet" href="../css/infostyle.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+
+    <style>
+    .favorite-button {
+        background-color: transparent;
+        border: none;
+        color: red;
+        font-size: 24px;
+        cursor: pointer;
+        padding: 0;
+        outline: none;
+    }
+
+    .favorite-button:hover {
+        color: #ff4081;
+    }
+    </style>
 </head>
 
 
 <?php
+    session_start();
 
-                        include '../php/dbconfig.php';
-                        $value = $_GET['value'];
+    include '../php/dbconfig.php';
+    $value = $_GET['value'];
 
-                        session_start();
-                        $_SESSION['mv_code'] = $value;
-                        // 현재 URL에서 쿼리 파라미터 값을 읽어옴
+    
+    $_SESSION['mv_code'] = $value;
+    // 현재 URL에서 쿼리 파라미터 값을 읽어옴
 
-                        // 데이터베이스에서 정보 가져오기
-                        // 감독 정보와 영화 정보를 함께 가져오는 쿼리
+    // 현재 로그인한 사용자 ID와 영화 코드
+    $usr_id = $_SESSION['loggedin_user_id'];
+    $mv_code = $value;
 
-                        $sql = "SELECT M.MV_name, M.Opening_date, M.Grade, M.MV_pic ,M.Run_Time, M.Audi_num, D.DIR_code, D.DIR_name ,M.Mv_Des ,D.DIR_pic
-                        FROM Movie M
-                        INNER JOIN Director D ON M.Dir_code = D.DIR_code
-                        WHERE M.MV_code = '$value'";
-                        $result = $conn->query($sql);
+    // 데이터베이스에서 현재 사용자가 '즐겨찾기'로 추가한 영화인지 확인
+    $fav_sql = "SELECT * FROM Saves WHERE USR_ID = '$usr_id' AND MV_code = '$mv_code'";
+    $fav_result = $conn->query($fav_sql);
 
-                        // 결과 출력
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                $MV_pic = $row['MV_pic'];
-                                $movieName = $row['MV_name'];
-                                $openingDate = $row['Opening_date'];
-                                $grade = $row['Grade'];
-                                $MV_pic = $row['MV_pic'];
-                                $runningTime = $row['Run_Time'];
-                                $audience = $row['Audi_num'];
-                                $directorName = $row['DIR_name'];
-                                $movieDescription = $row['Mv_Des'];
-                                $directorPicture = $row['DIR_pic'];
-                                $directorcode = $row['DIR_code'];
+    // 데이터베이스에서 정보 가져오기
+    // 감독 정보와 영화 정보를 함께 가져오는 쿼리
+    $sql = "SELECT M.MV_name, M.Opening_date, M.Grade, M.MV_pic ,M.Run_Time, M.Audi_num, D.DIR_code, D.DIR_name ,M.Mv_Des ,D.DIR_pic
+    FROM Movie M
+    INNER JOIN Director D ON M.Dir_code = D.DIR_code
+    WHERE M.MV_code = '$value'";
+    $result = $conn->query($sql);
 
-
-                            }
-                        } else {
-                            echo "영화를 찾을 수 없습니다.";
-                        }
-                        $conn->close();
-                        ?>
+    // 결과 출력
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $MV_pic = $row['MV_pic'];
+            $movieName = $row['MV_name'];
+            $openingDate = $row['Opening_date'];
+            $grade = $row['Grade'];
+            $MV_pic = $row['MV_pic'];
+            $runningTime = $row['Run_Time'];
+            $audience = $row['Audi_num'];
+            $directorName = $row['DIR_name'];
+            $movieDescription = $row['Mv_Des'];
+            $directorPicture = $row['DIR_pic'];
+            $directorcode = $row['DIR_code'];
+        }
+    } else {
+        echo "영화를 찾을 수 없습니다.";
+    }
+    $conn->close();
+    ?>
 <body>
     <div class="container">
         <div class="movie-info">
@@ -61,6 +83,14 @@
                 <p class="white_text">등급: <span class="white_text" id="movie-old"><?= $grade ?></span></p>
                 <p class="white_text">러닝 타임: <span class="white_text" id="movie-running-time"><?= $runningTime ?></span></p>
                 <p class="white_text">관객수: <span class="white_text" id="movie-audience"> <?= number_format($audience) ?>명</span></p>
+                <form method="post" action="save_favorite.php" id="favorite-form">
+                    <input type="hidden" name="USR_ID" value="<?php echo $usr_id; ?>">
+                    <input type="hidden" name="MV_code" value="<?php echo $mv_code; ?>">
+                    <input type="hidden" name="is_favorite" id="is-favorite" value="<?php echo ($fav_result->num_rows > 0) ? "1" : "0"; ?>">
+                    <button type="submit" id="favorite-button" class="favorite-button">
+                        <?php echo ($fav_result->num_rows > 0) ? "♥" : "♡"; ?>
+                    </button>
+                </form>
             </div>
         </div>
 
@@ -212,7 +242,7 @@
     <button id="scroll-to-top-button" title="맨 위로 이동" onclick="scrollToTop()">^</button>
 </body>
 <div id="footers"></div>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+<!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script> -->
 
 <script>
 // 별점 표시를 위한 함수
@@ -236,7 +266,7 @@ window.onload = function() {
 </script>
 
 
-<script src="../js/jquery-3.7.0.min.js"></script>
+<!-- <script src="../js/jquery-3.7.0.min.js"></script> -->
 <script type="text/javascript">
 
     $(document).ready(function () {
