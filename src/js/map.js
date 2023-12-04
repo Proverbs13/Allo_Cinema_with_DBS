@@ -14,87 +14,167 @@ function loadMapScript(callback) {
 
 // 맵 초기화 및 표시
 function initMap() {
-    // theaters = [
-    //     { name: "메가박스 청주사창", address: "충청북도 청주시 서원구 1순환로 682", url: "../../img/megabox.png", info: "1544-0070", lat: 36.632, lng: 127.460 },
-    //     { name: "CGV 청주터미널", address: "충청북도 청주시 흥덕구 가경동 1416-3", url: "../../img/cgv_terminal.png", info: "1544-1122", lat: 36.626, lng: 127.431 },
-    //     { name: "롯데시네마 서청주", address: "충청북도 청주시 흥덕구 비하동 순환로 1004", url: "../../img/lottecinema_cheongju.png", info: "1544-8855", lat: 36.644, lng: 127.420 },
-    //     { name: "CGV 청주(서문)", address: "충청북도 청주시 상당구 상당로81번길 63", url: "../../img/cgv_cheongju.png", info: "1544-1122", lat: 36.635, lng: 127.486 },
-    //     { name: "CGV 청주성안길", address: "충청북도 청주시 상당구 상당로81번길 33", url: "../../img/cgv_cheongju_load.png", info: "1544-1122", lat: 36.635, lng: 127.488 },
-    //     { name: "CGV 청주율량", address: "충청북도 청주시 청원구 충청대로 114 (라마다프라자 청주), 3관 2층", url: "../../img/cgv_cheongju_load.png", info: "", lat: 36.666, lng: 127.494 },
-    //     { name: "메가박스 오창", address: "충청북도 청주시 청원구 오창읍 중심상업1로 8-9, 3층", url: "../../img/cgv_cheongju_load.png", info: "", lat: 36.712, lng: 127.428 },
-    //     { name: "CGV 청주지웰시티", address: "충청북도 청주시 흥덕구 대농로 47-1 (복대동)", url: "../../img/cgv_cheongju_load.png", info: "", lat: 36.643, lng: 127.427 },
-    //     { name: "롯데시네마 청주용암", address: "충청북도 청주시 상당구 1순환로 1233, 1~4층 (용암동)", url: "../../img/cgv_cheongju_load.png", info: "", lat: 36.606, lng: 127.503 },
-    //  ];
-
     // API 키를 스크립트 URL에 삽입하여 동적으로 로드
     loadMapScript("showMap");
 }
 
-// 맵 표시 함수
-// function showMap() {
-//     // 맵 설정
-//     var mapOptions = {
-//         center: myPosition, // 내 위치
-//         zoom: 15 // 지도 초기 줌 레벨
-//     };
-//     // 맵
-//     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
-
-//     // 마커 생성
-//     theaters.forEach(({name, address, url, info, lat, lng }) => {
-//         const marker = new google.maps.Marker({
-//             position: { lat, lng },
-//             map: map,
-//         });
-
-//         // 인포 윈도우 생성
-//         const infowindow = new google.maps.InfoWindow({
-//             // 내용
-//             content: `<img src=${url} alt="" width="300px" height="300px"><br>
-//             <strong style="font-size: 30px">${name}</strong><br>
-//             <span style="font-size:20px; width:300px; text-overflow: ellipsis; white-space:nowrap; overflow:hidden; display:block;">
-//             <img src="../../img/marker.png" alt="" width="20px height="20px">${address}</span>
-//             <span style="font-size:20px; width:300px; text-overflow: ellipsis; white-space:nowrap; overflow:hidden; display:block;">
-//             <img src="../../img/call.png" alt="" width="20px height="20px">${info}</span>`
-//         });
-//         // 마커 hover 이벤트 처리
-//         marker.addListener('mouseover', function() {
-//             infowindow.open(map, marker);
-//         });
-//         marker.addListener('mouseout', function() {
-//             infowindow.close();
-//         });
-//     });
-// }
 function showMap() {
-    // 맵 설정
     var mapOptions = {
         center: myPosition,
         zoom: 15
     };
 
     var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+    var markers = []; // 마커를 저장할 배열
 
-    theaters.forEach(function(theater) {
-        console.log(theater.TH_Lat);
-        console.log(theater.TH_Lng);
+    // 이미지 URL 리스트
+    var urlList = [
+        "../../img/cgv_cheongju_load.png",
+        "../../img/cgv_cheongju.png",
+        "../../img/cgv_terminal.png",
+        "../../img/lottecinema_cheongju.png",
+        "../../img/megabox.png",
+        "../../img/theater1.png",
+        "../../img/theater2.png",
+        "../../img/theater3.png",
+        "../../img/theater4.png",
+        "../../img/theater5.png",
+        "../../img/theater6.png",
+        "../../img/theater7.png",
+        "../../img/theater8.png",
+        "../../img/theater9.png"
+    ];
+
+    theaters.forEach(function(theater, index) {
+        // 리스트에서 랜덤한 URL 선택
+        theater.randomUrl = urlList[Math.floor(Math.random() * urlList.length)];
+        
         var marker = new google.maps.Marker({
             position: new google.maps.LatLng(theater.TH_Lat, theater.TH_Lng),
             map: map
         });
 
         var infowindow = new google.maps.InfoWindow({
-            content: '<img src="' + '../../img/megabox.png' + '" alt="" width="300px" height="300px"><br>' +
-                     '<strong style="font-size: 30px">' + theater.TH_Place_name + '</strong><br>' +
-                     '<span style="font-size:20px;">' + theater.TH_Location + '</span><br>' +
-                     '<span style="font-size:20px;">' + theater.TH_Phone + '</span>'
+            content: '<div style="font-size: 20px; width: 300px; text-overflow: ellipsis; white-space: nowrap; overflow: hidden;">' +
+            '<img src="' + theater.randomUrl + '" alt="Theater Image" width="300px" height="300px"><br>' +
+            '<strong style="font-size: 30px">' + theater.TH_Place_name + '</strong><br>' +
+            '<span>' +
+            '<img src="../../img/marker.png" alt="Location Icon" width="20px" height="20px">' + theater.TH_Location +
+            '</span><br>' +
+            '<span>' +
+            '<img src="../../img/call.png" alt="Phone Icon" width="20px" height="20px">' + theater.TH_Phone +
+            '</span>' +
+            '</div>'
         });
 
         marker.addListener('mouseover', function() {
             infowindow.open(map, marker);
         });
+
         marker.addListener('mouseout', function() {
             infowindow.close();
+        });
+
+        markers.push(marker); // 마커를 배열에 추가
+    });
+
+    createMarkerList(theaters, map, markers); // 리스트 생성 함수 호출
+}
+
+// 마커 리스트 생성 함수
+function createMarkerList(theaters, map, markers) {
+    var listContainer = document.getElementById('markerList') || document.createElement('div');
+    if (!document.getElementById('markerList')) {
+        listContainer.id = 'markerList';
+        listContainer.style.width = '500px'; // Adjust width as needed
+        listContainer.style.position = 'absolute'; // 맵 위에 표시되지 않도록 절대 위치 사용
+        listContainer.style.zIndex = '5'; // 맵 위에 표시되도록 z-index 설정
+        listContainer.style.background = '#fff'; // 배경색 설정
+        listContainer.style.overflowY = 'auto'; // 스크롤 설정
+        listContainer.style.height = '1150px'; // Adjust height as needed
+        listContainer.style.boxShadow = '0 2px 4px rgba(0,0,0,0.2)'; // Optional: shadow for the container
+        // Insert the list container before the map element in the DOM
+        var mapElement = document.getElementById('map');
+        mapElement.parentNode.insertBefore(listContainer, mapElement);
+    } else {
+        listContainer.innerHTML = ''; // Clear existing content
+    }
+
+    theaters.forEach(function(theater, index) {
+        var listItem = document.createElement('div');
+        listItem.classList.add('marker-item');
+        listItem.style.display = 'flex';
+        listItem.style.alignItems = 'center';
+        listItem.style.marginBottom = '5px';
+        listItem.style.cursor = 'pointer'; // 마우스 오버 시 커서 변경
+
+        // Image container
+        var imageContainer = document.createElement('div');
+        imageContainer.style.width = '100px'; // Image width
+        imageContainer.style.height = '100px'; // Image height
+        imageContainer.style.flexShrink = '0'; // Prevent image from shrinking
+        imageContainer.style.borderRadius = '50%'; // Make it round
+        imageContainer.style.overflow = 'hidden'; // Hide overflow
+        imageContainer.style.marginRight = '10px'; // Margin between image and text
+
+        var image = document.createElement('img');
+        image.src = theater.randomUrl;
+        image.alt = 'Theater Image';
+        image.style.width = '100%';
+        image.style.height = '100%';
+        image.style.objectFit = 'cover'; // Cover the container with the image
+
+        // Append image to its container
+        imageContainer.appendChild(image);
+
+        // Text container
+        var textContainer = document.createElement('div');
+
+        var name = document.createElement('strong');
+        name.textContent = theater.TH_Place_name;
+        name.style.display = 'block'; // Make it a block to break line
+        name.style.fontSize = '25px'; // Adjust font size as needed
+
+        var location = document.createElement('div');
+        location.textContent = theater.TH_Location;
+        location.style.fontSize = '15px'; // Adjust font size as needed
+        location.style.color = '#666'; // Adjust text color as needed
+
+        var phone = document.createElement('div');
+        phone.textContent = theater.TH_Phone;
+        phone.style.fontSize = '0.8em'; // Adjust font size as needed
+        phone.style.color = '#666'; // Adjust text color as needed
+
+        // Append text elements to text container
+        textContainer.appendChild(name);
+        textContainer.appendChild(location);
+        textContainer.appendChild(phone);
+
+        // Append image and text containers to list item
+        listItem.appendChild(imageContainer);
+        listItem.appendChild(textContainer);
+
+        // Append list item to the list container
+        listContainer.appendChild(listItem);
+
+        // When the mouse hovers over the list item, console log the marker's position and name.
+        listItem.addEventListener('mouseover', function() {
+            console.log('Marker Position: ', theater.TH_Lat, theater.TH_Lng);
+            console.log('Marker Name: ', theater.TH_Place_name);
+            console.log('Marker: ', markers[index]);
+            
+            // If you want to pan the map to the marker position when hovering over the list:
+            map.panTo(new google.maps.LatLng(theater.TH_Lat, theater.TH_Lng));
+        });
+
+        // Optional: if you want to trigger the marker's click event when the list item is clicked
+        listItem.addEventListener('mouseover', function() {
+            google.maps.event.trigger(markers[index], 'mouseover');
+        });
+
+        // Optional: if you want to trigger the marker's click event when the list item is clicked
+        listItem.addEventListener('mouseout', function() {
+            google.maps.event.trigger(markers[index], 'mouseout');
         });
     });
 }
