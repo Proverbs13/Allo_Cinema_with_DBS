@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:wght@400;700&display=swap');
+
+
+@font-face {
+    font-family: 'baemin_font';
+    font-style: normal;
+    src: url('../../font/BMJUA_ttf.ttf') format('truetype');
+}
+
+
+* {
+    font-family: 'baemin_font';
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Noto Sans', sans-serif;
+    background-color: rgb(46, 40, 40);
+}
+
+.movie-card.fade-out {
+    opacity: 0;
+    transition: opacity .200s ease-out;
+}
+
+.movie-card.fade-in {
+    opacity: 0;
+    transition: opacity .200s ease-in;
+}
+
+.container {
+    max-width: 100%;
+    margin: 20px auto;
+    padding: 0 50px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 15px;
+    font-weight: 800;
+    display: inline-block;
+    padding: 0 0 5px;
+}
+
+.movie-container{
+    display: flex;
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    margin-left: 50px;
+    margin-right: 50px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+.movie-container img {
+    width: 150px;
+    border-radius: 5px;
+    margin-right: 20px;
+    box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
+}
+
+button {
+    background-color: blueviolet;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    border-radius: 5px;
+}
+
+button:hover {
+    background-color: rgb(117, 28, 201);
+}
+
+h2,
+h3 {
+    margin: 5px 0;
+}
+
+#scroll-to-top-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    color: #fff;
+    background-color: blueviolet;
+    border: none;
+    border-radius: 50%;
+    box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px;
+    cursor: pointer;
+    transition: opacity 0.2s ease-in-out;
+    z-index: 5;
+}
+
+#scroll-to-top-button:hover {
+    opacity: 0.8;
+}
+
+.brand-button:hover {
+    background-color: rgb(116, 32, 196);
+}
+
+body::-webkit-scrollbar {
+    width: 8px;  
+}
+
+body::-webkit-scrollbar-thumb {
+    height: 30%; 
+    background: #000000; 
+    
+    border-radius: 10px;
+}
+
+body::-webkit-scrollbar-track {
+    background: rgba(33, 122, 244, .1); 
+}
+
+.movie-container-content{
+    width: 100% ;
+}
+
+.white_text{
+    color: white;
+}
+
+.movies {
+    display: flex;
+    flex-wrap: wrap; /* 여러 줄로 항목들을 나열 */
+    justify-content: space-around; /* 항목들을 양쪽 끝과 중앙으로 정렬 */
+    gap: 20px; /* 항목들 사이의 간격 */
+}
+
+.movie-card img {
+    width: 400px; /* Set image width */
+    height: 560px; /* Set image height */
+    margin: 20px auto; /* Center the image with automatic horizontal margins and 20px of vertical margin */
+    display: block; /* Display block to enable margin auto */
+    box-shadow: 5px 5px 5px 5px #121213; /* Shadow effect */
+    transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for transform and box-shadow */
+}
+
+.movie-card img:hover {
+    transform: scale(1.05); /* Slightly increase the size */
+    box-shadow: 5px 5px 5px 5px #121213; /* Enhance the shadow effect */
+}
+
+.movie-card.selected img {
+    opacity: 0.5; /* 어두운 상태로 만들기 */
+}
