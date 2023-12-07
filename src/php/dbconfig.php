@@ -1,7 +1,7 @@
 <?php
-$servername = "54.180.124.30:57884";
+$servername = "43.200.163.101:54685";
 $username = "root";
-$password = "@@@@";
+$password = "1234";
 $dbname = "FILM_INDUSTRY"; // 데이터베이스 이름
 
 // Create connection
