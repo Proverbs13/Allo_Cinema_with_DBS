@@ -23,10 +23,13 @@
         $result = $conn->query($sql);
 
         $sql2 = "SELECT U.USR_name, R.rating, R.content, M.MV_name
-         FROM Review R 
-         INNER JOIN User U ON R.USR_ID = U.USR_ID 
-         INNER JOIN Movie M ON R.MV_code = M.MV_code
-         WHERE R.USR_ID = '$loggedInUserID'";
+        FROM User U
+        INNER JOIN (
+            SELECT *
+            FROM Review
+            WHERE USR_ID = '$loggedInUserID'
+        ) R ON U.USR_ID = R.USR_ID
+        INNER JOIN Movie M ON R.MV_code = M.MV_code;";
         $result2 = $conn->query($sql2);
 
         //$sql3 = "SELECT USR_ID, USR_name, Phone_Num FROM User WHERE USR_ID = '$loggedInUserID'";
