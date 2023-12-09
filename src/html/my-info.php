@@ -35,10 +35,23 @@
         //$sql3 = "SELECT USR_ID, USR_name, Phone_Num FROM User WHERE USR_ID = '$loggedInUserID'";
         //$result3 = $conn->query($sql3);
 
+        $sql4 = "SELECT Phone_Num FROM Phone WHERE USR_ID = '$loggedInUserID'";
+        $result4 = $conn->query($sql4);
+
         if ($result->num_rows > 0) {
             // 결과를 가져와서 표시
             while($row = $result->fetch_assoc()) {
-                //사용자 정보 컨테이너
+                // 여기서 $row는 $result 쿼리의 결과를 담고 있음
+        
+                // $result4 쿼리 결과 처리
+                if ($result4->num_rows > 0) {
+                    while($row4 = $result4->fetch_assoc()) {
+                        // 여기서 $row4는 $result4 쿼리의 결과를 담고 있음
+                        $phoneNum = $row4["Phone_Num"]; // $result4의 Phone_Num
+                    }
+                }
+        
+                // 사용자 정보 컨테이너 출력
                 echo '<div class="container">';
                 echo '<div class="movie-info">';
                 echo '<img id="movie-image" src="../../img/human_default.png">';
@@ -46,7 +59,7 @@
                 echo '<h2>내 정보</h2>';
                 echo '<p class="white_text">ID: ' . $row["USR_ID"] . '</p>';
                 echo '<p class="white_text">이름: ' . $row["USR_name"] . '</p>';
-                echo '<p class="white_text">전화번호: ' . $row["Phone_Num"] . '</p>';
+                echo '<p class="white_text">전화번호: ' . $phoneNum . '</p>';
                 echo '</div>';
                 echo '</div>';
 

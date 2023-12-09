@@ -7,7 +7,7 @@ if ($conn->connect_error) {
 }
 
 // 쿼리 실행
-$sql = "SELECT TH_Place_name, TH_Location, TH_Lat, TH_Lng, TH_Phone FROM Theater_loc";
+$sql = "SELECT TH_Place_name, TH_Location, TH_Lat, TH_Lng, TH_Phone FROM Theater";
 $result = $conn->query($sql);
 
 $theaters = array();

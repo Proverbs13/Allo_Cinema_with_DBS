@@ -25,21 +25,25 @@
             $dir_list = []; // 감독 코드 목록
             $act_list = []; // 배우 코드 목록
 
-            // 장르 코드에 해당하는 영화들의 MV_code 추출
-            foreach ($genres as $genre) {
-                $sql = "SELECT MV_code FROM Movie WHERE GR_code = '$genre'";
-                $result = $conn->query($sql);
-                while ($row = $result->fetch_assoc()) {
-                    $reco_movies[$row['MV_code']] = true;
-                }
-            }
+            // 장르 코드에 해당하는 영화들의 MV_code 추출, 영화 코드에 해당하는 감독 코드 추출, 영화 코드에 해당하는 배우 코드 추출
+            $sql = "
+                (SELECT 'Director' AS Type, DIR_code AS Code FROM Movie WHERE MV_code IN ('".implode("','", $movies)."'))
+                UNION
+                (SELECT 'Actor' AS Type, ACT_code AS Code FROM Enter WHERE MV_code IN ('".implode("','", $movies)."'))
+                UNION
+                (SELECT 'Movie' AS Type, MV_code AS Code FROM Movie WHERE GR_code IN ('".implode("','", $genres)."'))
+            ";
+            $result = $conn->query($sql);
 
-            // 영화 코드에 해당하는 감독 코드 추출
-            foreach ($movies as $movie) {
-                $sql = "SELECT DIR_code FROM Movie WHERE MV_code = '$movie'";
-                $result = $conn->query($sql);
+            if ($result->num_rows > 0) {
                 while ($row = $result->fetch_assoc()) {
-                    $dir_list[$row['DIR_code']] = true;
+                    if ($row['Type'] == 'Director') {
+                        $dir_list[$row['Code']] = true;
+                    } elseif ($row['Type'] == 'Actor') {
+                        $act_list[$row['Code']] = true;
+                    } elseif ($row['Type'] == 'Movie') {
+                        $reco_movies[$row['Code']] = true;
+                    }
                 }
             }
 
@@ -49,15 +53,6 @@
                 $result = $conn->query($sql);
                 while ($row = $result->fetch_assoc()) {
                     $reco_movies[$row['MV_code']] = true;
-                }
-            }
-
-            // 영화 코드에 해당하는 배우 코드 추출
-            foreach ($movies as $movie) {
-                $sql = "SELECT ACT_code FROM Enter WHERE MV_code = '$movie'";
-                $result = $conn->query($sql);
-                while ($row = $result->fetch_assoc()) {
-                    $act_list[$row['ACT_code']] = true;
                 }
             }
 

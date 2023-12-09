@@ -55,10 +55,14 @@
                         echo '<div class="gerne" >' . $genre . '</div>';
                     } else {
                         $genre = mysqli_real_escape_string($conn, $genre);
-                        $sql = "SELECT m.MV_code, m.MV_name, m.Grade, m.MV_pic, m.Audi_num, m.Mv_Des
-                                FROM Movie m
-                                JOIN Genre g ON m.GR_code = g.GR_code
-                                WHERE g.GR_name = '$genre'";
+                        $sql = "SELECT m.MV_code, m.MV_name, m.Grade, m.MV_pic, m.Audi_num, m.Mv_Des 
+                        FROM Movie m 
+                        JOIN (
+                          SELECT g.GR_code 
+                          FROM Genre g 
+                          WHERE g.GR_name = '$genre') 
+                        as G 
+                        ON m.GR_code = G.GR_code;";
                         echo '<div class="gerne" >' . $genre . '</div>';
                     }
 
