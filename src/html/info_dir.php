@@ -12,7 +12,6 @@
 
 <?php
 include '../php/dbconfig.php';
-// 현재 URL에서 쿼리 파라미터 값을 읽어옴
 $value = $_GET['value'];
 // 데이터베이스에서 배우 정보 가져오기
 $sql = "SELECT DIR_code, DIR_name, DIR_pic FROM Director WHERE DIR_code = '$value'";
@@ -89,7 +88,6 @@ $conn->close();
 <script>
 
 
-    // 현재 URL에서 쿼리 파라미터 값을 읽어옴
     var urlParams = new URLSearchParams(window.location.search);
     var value = urlParams.get('value');
 
@@ -116,7 +114,7 @@ $conn->close();
         });
 
 
-        // 체크박스 정의
+        // 체크박스
         const checkboxes = Array.from(document.querySelectorAll('.rating input[type="checkbox"]'));
         function updateRating() {
             const selectedCheckbox = checkboxes.find((checkbox) => checkbox.checked);

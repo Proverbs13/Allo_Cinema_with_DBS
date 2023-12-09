@@ -17,7 +17,7 @@
         session_start();
         include '../php/dbconfig.php';
 
-        // 여기서 로그인한 사용자의 ID를 가져오는 방법이 있어야 합니다.
+        
         $loggedInUserID = $_SESSION['loggedin_user_id'];
 
         // 데이터베이스에서 해당 사용자의 정보 가져오기
@@ -42,18 +42,19 @@
 
         if ($result->num_rows > 0) {
             // 결과를 가져와서 표시
-            while($row = $result->fetch_assoc()) {
-                // 여기서 $row는 $result 쿼리의 결과를 담고 있음
+            while ($row = $result->fetch_assoc()) {
+                
+               
+                $phoneNumbers = array();
         
-                // $result4 쿼리 결과 처리
                 if ($result4->num_rows > 0) {
-                    while($row4 = $result4->fetch_assoc()) {
-                        // 여기서 $row4는 $result4 쿼리의 결과를 담고 있음
-                        $phoneNum = $row4["Phone_Num"]; // $result4의 Phone_Num
+                    while ($row4 = $result4->fetch_assoc()) {
+                        
+                        $phoneNumbers[] = $row4["Phone_Num"]; 
                     }
                 }
         
-                // 사용자 정보 컨테이너 출력
+               
                 echo '<div class="container">';
                 echo '<div class="movie-info">';
                 echo '<img id="movie-image" src="../../img/human_default.png">';
@@ -61,7 +62,19 @@
                 echo '<h2>내 정보</h2>';
                 echo '<p class="white_text">ID: ' . $row["USR_ID"] . '</p>';
                 echo '<p class="white_text">이름: ' . $row["USR_name"] . '</p>';
-                echo '<p class="white_text">전화번호: ' . $phoneNum . '</p>';
+        
+                // 모든 핸드폰 번호 출력
+                echo '<p class="white_text">전화번호: ';
+                for ($i = 0; $i < count($phoneNumbers); $i++) {
+                    if ($i === 0) {
+                        echo $phoneNumbers[$i] . '<br>'; 
+                    } else {
+                        $spaces = str_repeat('&nbsp;', 15); 
+                        echo $spaces . $phoneNumbers[$i] . '<br>'; 
+                    }
+                }
+                echo '</p>';
+        
                 echo '</div>';
                 echo '</div>';
 
@@ -78,7 +91,6 @@
                         echo '<li class="review-item">';
                         echo '<div class="name">' . $mvname . '</div>';
                         echo '<div class="name">' . $username . '</div>';
-                        // Add the code to display stars based on the rating
                         for ($i = 1; $i <= $rating; $i++) {
                             echo '★';
                             }
