@@ -27,11 +27,11 @@
 
             // 장르 코드에 해당하는 영화들의 MV_code 추출, 영화 코드에 해당하는 감독 코드 추출, 영화 코드에 해당하는 배우 코드 추출
             $sql = "
-                (SELECT 'Director' AS Type, DIR_code AS Code FROM Movie WHERE MV_code IN ('".implode("','", $movies)."'))
+                SELECT 'Director' AS Type, DIR_code AS Code FROM Movie WHERE MV_code IN ('".implode("','", $movies)."')
                 UNION
-                (SELECT 'Actor' AS Type, ACT_code AS Code FROM Enter WHERE MV_code IN ('".implode("','", $movies)."'))
+                SELECT 'Actor' AS Type, ACT_code AS Code FROM Enter WHERE MV_code IN ('".implode("','", $movies)."')
                 UNION
-                (SELECT 'Movie' AS Type, MV_code AS Code FROM Movie WHERE GR_code IN ('".implode("','", $genres)."'))
+                SELECT 'Movie' AS Type, MV_code AS Code FROM Movie WHERE GR_code IN ('".implode("','", $genres)."')
             ";
             $result = $conn->query($sql);
 

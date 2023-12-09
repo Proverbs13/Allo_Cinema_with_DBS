@@ -10,7 +10,9 @@
 <body>
     <div id="headers"></div>
     <div class="user-info">
-        <?php        
+        <?php
+        error_reporting( E_ALL );
+        ini_set( "display_errors", 1 );
 
         session_start();
         include '../php/dbconfig.php';
@@ -19,17 +21,17 @@
         $loggedInUserID = $_SESSION['loggedin_user_id'];
 
         // 데이터베이스에서 해당 사용자의 정보 가져오기
-        $sql = "SELECT USR_ID, USR_name, Phone_Num FROM User WHERE USR_ID = '$loggedInUserID'";
+        $sql = "SELECT USR_ID, USR_name FROM User WHERE USR_ID = '$loggedInUserID'";
         $result = $conn->query($sql);
 
         $sql2 = "SELECT U.USR_name, R.rating, R.content, M.MV_name
         FROM User U
-        INNER JOIN (
+        JOIN (
             SELECT *
             FROM Review
             WHERE USR_ID = '$loggedInUserID'
         ) R ON U.USR_ID = R.USR_ID
-        INNER JOIN Movie M ON R.MV_code = M.MV_code;";
+        JOIN Movie M ON R.MV_code = M.MV_code;";
         $result2 = $conn->query($sql2);
 
         //$sql3 = "SELECT USR_ID, USR_name, Phone_Num FROM User WHERE USR_ID = '$loggedInUserID'";
@@ -91,9 +93,12 @@
 
                 // 찜 목록 조회
                 $sql3 = "SELECT M.MV_pic, M.MV_name, M.Audi_num, M.Mv_Des, M.Grade
-                FROM Saves S
-                INNER JOIN Movie M ON S.MV_code = M.MV_code
-                WHERE S.USR_ID = '$loggedInUserID'";
+                FROM Movie M
+                JOIN ( SELECT *
+                            FROM Saves
+                            WHERE USR_ID =  
+                            '$loggedInUserID' ) as S
+                ON  S.MV_code = M.MV_code;";
                 $result3 = $conn->query($sql3);
 
                 if ($result3->num_rows > 0) {
