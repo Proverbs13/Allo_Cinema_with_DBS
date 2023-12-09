@@ -48,7 +48,7 @@
     // 감독 정보와 영화 정보를 함께 가져오는 쿼리
     $sql = "SELECT M.MV_name, M.Opening_date, M.Grade, M.MV_pic ,M.Run_Time, M.Audi_num, D.DIR_code, D.DIR_name ,M.Mv_Des ,D.DIR_pic
     FROM Movie M
-    INNER JOIN Director D ON M.Dir_code = D.DIR_code
+    JOIN Director D ON M.Dir_code = D.DIR_code
     WHERE M.MV_code = '$value'";
     $result = $conn->query($sql);
 
@@ -140,7 +140,7 @@
                     // 배우 정보를 가져오는 쿼리
                     $sql = "SELECT A.ACT_code, A.ACT_name, A.ACT_pic
                             FROM Actor A
-                            INNER JOIN Enter E ON A.ACT_code = E.ACT_code
+                            JOIN Enter E ON A.ACT_code = E.ACT_code
                             WHERE E.MV_code = '$movieCode'";
                     $result = $conn->query($sql);
 
@@ -182,7 +182,7 @@
                     $movieCode = $_GET['value'];
                     $sql = "SELECT U.USR_name, R.MV_code, R.rating, R.content 
                     FROM Review R
-                    INNER JOIN User U ON R.USR_ID = U.USR_ID
+                    JOIN User U ON R.USR_ID = U.USR_ID
                     WHERE R.MV_code = '$value'";
 
                     $result = $conn->query($sql);
